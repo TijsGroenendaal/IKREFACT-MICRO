@@ -1,4 +1,4 @@
-package nl.hetckm.bouncer.auth;
+package nl.hetckm.bouncer.helper;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;

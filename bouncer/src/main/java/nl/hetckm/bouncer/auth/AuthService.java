@@ -7,6 +7,7 @@ import nl.hetckm.bouncer.auth.model.UserLoginResult;
 import nl.hetckm.bouncer.exceptions.AppUserDisabledException;
 import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
 import nl.hetckm.bouncer.exceptions.WrongCredentialsException;
+import nl.hetckm.bouncer.helper.Argon2PasswordEncoder;
 import nl.hetckm.bouncer.helper.JwtHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.platform.model.Platform;

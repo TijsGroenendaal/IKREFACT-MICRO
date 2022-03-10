@@ -1,6 +1,6 @@
 package nl.hetckm.bouncer.user;
 
-import nl.hetckm.bouncer.auth.Argon2PasswordEncoder;
+import nl.hetckm.bouncer.helper.Argon2PasswordEncoder;
 import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
 import nl.hetckm.bouncer.exceptions.ForbiddenException;
 import nl.hetckm.bouncer.exceptions.NoPlatformSpecifiedException;
