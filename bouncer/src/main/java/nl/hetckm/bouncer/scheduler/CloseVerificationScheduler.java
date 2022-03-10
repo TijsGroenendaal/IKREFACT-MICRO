@@ -1,11 +1,11 @@
 package nl.hetckm.bouncer.scheduler;
 
+import nl.hetckm.base.enums.ChallengeStatus;
+import nl.hetckm.base.enums.VerificationStatus;
+import nl.hetckm.base.model.Challenge;
+import nl.hetckm.base.model.Verification;
 import nl.hetckm.bouncer.challenge.ChallengeRepository;
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.challenge.model.ChallengeStatus;
 import nl.hetckm.bouncer.verification.VerificationRepository;
-import nl.hetckm.bouncer.verification.model.Verification;
-import nl.hetckm.bouncer.verification.model.VerificationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

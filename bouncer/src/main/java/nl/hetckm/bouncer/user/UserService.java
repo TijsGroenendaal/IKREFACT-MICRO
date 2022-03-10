@@ -1,17 +1,18 @@
 package nl.hetckm.bouncer.user;
 
-import nl.hetckm.bouncer.helper.Argon2PasswordEncoder;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
-import nl.hetckm.bouncer.exceptions.ForbiddenException;
-import nl.hetckm.bouncer.exceptions.NoPlatformSpecifiedException;
-import nl.hetckm.bouncer.exceptions.UsernameExistsException;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.exceptions.ForbiddenException;
+import nl.hetckm.base.exceptions.NoPlatformSpecifiedException;
+import nl.hetckm.base.exceptions.UsernameExistsException;
+import nl.hetckm.base.model.AppUser;
+import nl.hetckm.base.model.Platform;
+import nl.hetckm.base.model.Role;
+import nl.hetckm.bouncer.auth.Argon2PasswordEncoder;
 import nl.hetckm.bouncer.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.platform.model.Platform;
-import nl.hetckm.bouncer.user.model.AppUser;
-import nl.hetckm.bouncer.user.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private PlatformService platformService;
+    private final PlatformService platformService;
     private final Argon2PasswordEncoder argon2PasswordEncoder;
 
     @Value("${superuser.username}")
@@ -38,13 +39,12 @@ public class UserService {
     private String superUserPassword;
 
     @Autowired
-    public UserService(UserRepository userRepository, Argon2PasswordEncoder argon2PasswordEncoder) {
+    public UserService(UserRepository userRepository,
+                       Argon2PasswordEncoder argon2PasswordEncoder,
+                       @Lazy PlatformService platformService
+    ) {
         this.userRepository = userRepository;
         this.argon2PasswordEncoder = argon2PasswordEncoder;
-    }
-
-    @Autowired
-    public void setPlatformService(PlatformService platformService) {
         this.platformService = platformService;
     }
 

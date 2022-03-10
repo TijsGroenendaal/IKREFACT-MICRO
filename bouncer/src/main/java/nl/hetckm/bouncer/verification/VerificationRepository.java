@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.verification;
 
-import nl.hetckm.bouncer.platform.model.Platform;
-import nl.hetckm.bouncer.verification.model.Verification;
+import nl.hetckm.base.model.Platform;
+import nl.hetckm.base.model.Verification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -1,22 +1,16 @@
 package nl.hetckm.bouncer.auth;
 
-import nl.hetckm.bouncer.auth.model.PlatformLogin;
-import nl.hetckm.bouncer.auth.model.PlatformLoginResult;
-import nl.hetckm.bouncer.auth.model.UserLogin;
-import nl.hetckm.bouncer.auth.model.UserLoginResult;
-import nl.hetckm.bouncer.exceptions.AppUserDisabledException;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
-import nl.hetckm.bouncer.exceptions.WrongCredentialsException;
-import nl.hetckm.bouncer.helper.Argon2PasswordEncoder;
+import nl.hetckm.base.exceptions.AppUserDisabledException;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.exceptions.WrongCredentialsException;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.helper.JwtHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.platform.model.Platform;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import nl.hetckm.bouncer.user.UserService;
-import nl.hetckm.bouncer.user.model.AppUser;
-import nl.hetckm.bouncer.user.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -50,11 +44,11 @@ public class AuthService {
 
     @Autowired
     public AuthService(
-            UserPrincipalService userPrincipalService,
-            PlatformService platformService,
+            @Lazy UserPrincipalService userPrincipalService,
+            @Lazy PlatformService platformService,
             Argon2PasswordEncoder argon2PasswordEncoder,
             JwtHelper jwtHelper,
-            UserService userService
+            @Lazy UserService userService
     ) {
         this.userPrincipalService = userPrincipalService;
         this.platformService = platformService;

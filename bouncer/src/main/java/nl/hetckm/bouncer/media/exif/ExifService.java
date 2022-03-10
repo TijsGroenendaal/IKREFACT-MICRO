@@ -6,7 +6,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import lombok.Getter;
 import lombok.Setter;
-import nl.hetckm.bouncer.media.exif.model.Exif;
+import nl.hetckm.base.model.Exif;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

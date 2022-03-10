@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.user;
 
-import nl.hetckm.bouncer.user.model.AppUser;
-import nl.hetckm.bouncer.user.model.UserResponse;
+import nl.hetckm.base.model.AppUser;
+import nl.hetckm.base.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;

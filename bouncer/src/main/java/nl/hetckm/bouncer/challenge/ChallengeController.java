@@ -1,10 +1,11 @@
 package nl.hetckm.bouncer.challenge;
 
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.challenge.model.ChallengeResponse;
-import nl.hetckm.bouncer.challenge.model.ChallengeUpdate;
-import nl.hetckm.bouncer.challenge.model.NewChallengeRequest;
+import nl.hetckm.base.model.Challenge;
+import nl.hetckm.base.model.ChallengeResponse;
+import nl.hetckm.base.model.ChallengeUpdate;
+import nl.hetckm.base.model.NewChallengeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @Autowired
-    public ChallengeController(ChallengeService challengeService) {
+    public ChallengeController(@Lazy ChallengeService challengeService) {
         this.challengeService = challengeService;
     }
 

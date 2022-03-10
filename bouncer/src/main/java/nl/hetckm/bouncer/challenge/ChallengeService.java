@@ -1,25 +1,21 @@
 package nl.hetckm.bouncer.challenge;
 
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.challenge.model.ChallengeResponse;
-import nl.hetckm.bouncer.challenge.model.ChallengeStatus;
-import nl.hetckm.bouncer.exceptions.EntityClosedException;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
-import nl.hetckm.bouncer.exceptions.NotAllChallengesReviewedException;
-import nl.hetckm.bouncer.exceptions.VerificationLifetimeReachedException;
+import nl.hetckm.base.enums.ChallengeStatus;
+import nl.hetckm.base.enums.VerificationStatus;
+import nl.hetckm.base.enums.WebhookChange;
+import nl.hetckm.base.enums.WebhookType;
+import nl.hetckm.base.exceptions.EntityClosedException;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.exceptions.NotAllChallengesReviewedException;
+import nl.hetckm.base.exceptions.VerificationLifetimeReachedException;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.platform.model.Platform;
 import nl.hetckm.bouncer.preset.PresetService;
-import nl.hetckm.bouncer.preset.model.Preset;
 import nl.hetckm.bouncer.verification.VerificationService;
-import nl.hetckm.bouncer.verification.model.Verification;
-import nl.hetckm.bouncer.verification.model.VerificationStatus;
 import nl.hetckm.bouncer.webhooks.WebhookService;
-import nl.hetckm.bouncer.webhooks.model.WebhookChange;
-import nl.hetckm.bouncer.webhooks.model.WebhookType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,7 +28,7 @@ import java.util.UUID;
 @Service
 public class ChallengeService {
     private final ChallengeRepository challengeRepository;
-    private VerificationService verificationService;
+    private final VerificationService verificationService;
     private final PlatformService platformService;
     private final PresetService presetService;
 
@@ -45,16 +41,13 @@ public class ChallengeService {
             ChallengeRepository challengeRepository,
             WebhookService webhookService,
             PlatformService platformService,
-            PresetService presetService
+            PresetService presetService,
+            @Lazy VerificationService verificationService
     ) {
         this.challengeRepository = challengeRepository;
         this.webhookService = webhookService;
         this.platformService = platformService;
         this.presetService = presetService;
-    }
-
-    @Autowired
-    public void setVerificationService(VerificationService verificationService) {
         this.verificationService = verificationService;
     }
 

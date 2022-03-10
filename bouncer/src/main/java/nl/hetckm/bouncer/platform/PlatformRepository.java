@@ -1,6 +1,6 @@
 package nl.hetckm.bouncer.platform;
 
-import nl.hetckm.bouncer.platform.model.Platform;
+import nl.hetckm.base.model.Platform;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

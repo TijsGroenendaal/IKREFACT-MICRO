@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.media;
 
-import nl.hetckm.bouncer.exceptions.UnsupportedMediaFormatException;
-import nl.hetckm.bouncer.media.model.UploadResult;
+import nl.hetckm.base.exceptions.UnsupportedMediaFormatException;
+import nl.hetckm.base.model.UploadResult;
 import org.apache.tika.Tika;
 
 import java.io.IOException;

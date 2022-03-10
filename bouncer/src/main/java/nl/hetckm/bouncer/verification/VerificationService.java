@@ -1,20 +1,16 @@
 package nl.hetckm.bouncer.verification;
 
+import nl.hetckm.base.enums.VerificationStatus;
+import nl.hetckm.base.enums.WebhookChange;
+import nl.hetckm.base.enums.WebhookType;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.challenge.ChallengeService;
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
 import nl.hetckm.bouncer.helper.RelationHelper;
-import nl.hetckm.bouncer.media.model.Media;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.platform.model.Platform;
-import nl.hetckm.bouncer.preset.model.Preset;
-import nl.hetckm.bouncer.verification.model.Verification;
-import nl.hetckm.bouncer.verification.model.VerificationResponse;
-import nl.hetckm.bouncer.verification.model.VerificationStatus;
 import nl.hetckm.bouncer.webhooks.WebhookService;
-import nl.hetckm.bouncer.webhooks.model.WebhookChange;
-import nl.hetckm.bouncer.webhooks.model.WebhookType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,22 +25,19 @@ public class VerificationService {
 
     private final VerificationRepository verificationRepository;
     private final PlatformService platformService;
-    private ChallengeService challengeService;
+    private final ChallengeService challengeService;
     private final WebhookService webhookService;
 
     @Autowired
     public VerificationService(
             VerificationRepository verificationRepository,
             PlatformService platformService,
-            WebhookService webhookService
+            WebhookService webhookService,
+            @Lazy ChallengeService challengeService
     ) {
         this.verificationRepository = verificationRepository;
         this.platformService = platformService;
         this.webhookService = webhookService;
-    }
-
-    @Autowired
-    public void setChallengeService(ChallengeService challengeService) {
         this.challengeService = challengeService;
     }
 

@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.webhooks;
 
-import nl.hetckm.bouncer.webhooks.model.Webhook;
-import nl.hetckm.bouncer.webhooks.model.WebhookResponse;
+import nl.hetckm.base.model.Webhook;
+import nl.hetckm.base.model.WebhookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;

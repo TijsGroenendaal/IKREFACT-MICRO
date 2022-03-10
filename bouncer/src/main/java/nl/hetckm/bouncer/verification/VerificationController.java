@@ -1,10 +1,10 @@
 package nl.hetckm.bouncer.verification;
 
-import nl.hetckm.bouncer.exceptions.ForbiddenException;
-import nl.hetckm.bouncer.verification.model.Verification;
-import nl.hetckm.bouncer.verification.model.VerificationResponse;
-import nl.hetckm.bouncer.verification.model.VerificationReviewed;
-import nl.hetckm.bouncer.verification.model.VerificationStatus;
+import nl.hetckm.base.enums.VerificationStatus;
+import nl.hetckm.base.exceptions.ForbiddenException;
+import nl.hetckm.base.model.Verification;
+import nl.hetckm.base.model.VerificationResponse;
+import nl.hetckm.base.model.VerificationReviewed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;

@@ -1,22 +1,17 @@
 package nl.hetckm.bouncer.platform;
 
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
-import nl.hetckm.bouncer.exceptions.InvalidJwtException;
-import nl.hetckm.bouncer.exceptions.UsernameExistsException;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.exceptions.InvalidJwtException;
+import nl.hetckm.base.exceptions.UsernameExistsException;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.helper.RelationHelper;
 import nl.hetckm.bouncer.media.EncryptionService;
-import nl.hetckm.bouncer.platform.model.NewPlatformResponse;
-import nl.hetckm.bouncer.platform.model.Platform;
-import nl.hetckm.bouncer.platform.model.PlatformResponse;
-import nl.hetckm.bouncer.setting.model.Setting;
 import nl.hetckm.bouncer.user.UserService;
-import nl.hetckm.bouncer.user.model.AppUser;
-import nl.hetckm.bouncer.user.model.Role;
-import nl.hetckm.bouncer.user.model.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,7 +28,7 @@ public class PlatformService {
     Logger logger = LoggerFactory.getLogger(PlatformService.class);
 
     private final PlatformRepository platformRepository;
-    private UserService userService;
+    private final UserService userService;
     private final EncryptionService encryptionService;
 
     @Value("${lifetime.challenge}")
@@ -45,14 +40,11 @@ public class PlatformService {
     @Autowired
     public PlatformService(
             PlatformRepository platformRepository,
-            EncryptionService encryptionService
+            EncryptionService encryptionService,
+            @Lazy UserService userService
     ) {
         this.platformRepository = platformRepository;
         this.encryptionService = encryptionService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 

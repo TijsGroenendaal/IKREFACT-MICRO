@@ -1,13 +1,11 @@
 package nl.hetckm.bouncer.media.vision;
 
 import com.google.cloud.vision.v1.*;
-import nl.hetckm.bouncer.challenge.model.Challenge;
+import nl.hetckm.base.interfaces.VertexContainer;
+import nl.hetckm.base.model.*;
+import nl.hetckm.base.model.Vertex;
 import nl.hetckm.bouncer.media.MediaRepository;
-import nl.hetckm.bouncer.media.exif.model.Exif;
 import nl.hetckm.bouncer.media.gps.GpsService;
-import nl.hetckm.bouncer.media.model.Media;
-import nl.hetckm.bouncer.media.vision.model.Vertex;
-import nl.hetckm.bouncer.media.vision.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

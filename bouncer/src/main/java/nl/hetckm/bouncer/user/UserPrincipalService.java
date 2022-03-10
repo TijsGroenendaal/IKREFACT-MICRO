@@ -1,13 +1,13 @@
 package nl.hetckm.bouncer.user;
 
-import nl.hetckm.bouncer.user.model.AppUser;
+import nl.hetckm.base.model.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
 
 @Component
 public class UserPrincipalService implements UserDetailsService {
@@ -15,7 +15,7 @@ public class UserPrincipalService implements UserDetailsService {
     private final UserService userService;
 
     @Autowired
-    public UserPrincipalService(UserService userService) {
+    public UserPrincipalService(@Lazy UserService userService) {
         this.userService = userService;
     }
 

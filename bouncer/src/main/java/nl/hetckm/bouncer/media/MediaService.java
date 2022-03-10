@@ -1,18 +1,14 @@
 package nl.hetckm.bouncer.media;
 
+import nl.hetckm.base.enums.StorageType;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.challenge.ChallengeService;
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
 import nl.hetckm.bouncer.helper.RelationHelper;
 import nl.hetckm.bouncer.media.aws.S3Service;
-import nl.hetckm.bouncer.media.exif.model.Exif;
 import nl.hetckm.bouncer.media.filesystem.FileSystemService;
-import nl.hetckm.bouncer.media.model.Media;
-import nl.hetckm.bouncer.media.model.MediaResponse;
-import nl.hetckm.bouncer.media.model.UploadResult;
 import nl.hetckm.bouncer.media.vision.VisionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

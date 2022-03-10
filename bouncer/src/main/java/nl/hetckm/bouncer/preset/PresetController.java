@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.preset;
 
-import nl.hetckm.bouncer.preset.model.Preset;
-import nl.hetckm.bouncer.preset.model.PresetResponse;
+import nl.hetckm.base.model.Preset;
+import nl.hetckm.base.model.PresetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;

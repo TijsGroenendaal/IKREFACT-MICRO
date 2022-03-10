@@ -1,19 +1,19 @@
 package nl.hetckm.bouncer.verdict;
 
+import nl.hetckm.base.enums.ChallengeStatus;
+import nl.hetckm.base.enums.VerificationStatus;
+import nl.hetckm.base.enums.WebhookChange;
+import nl.hetckm.base.enums.WebhookType;
+import nl.hetckm.base.exceptions.EntityNotFoundException;
+import nl.hetckm.base.exceptions.VerdictAlreadyExists;
+import nl.hetckm.base.model.Challenge;
+import nl.hetckm.base.model.Verdict;
+import nl.hetckm.base.model.VerdictAddModel;
+import nl.hetckm.base.model.VerdictResponse;
 import nl.hetckm.bouncer.challenge.ChallengeService;
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.challenge.model.ChallengeStatus;
-import nl.hetckm.bouncer.exceptions.EntityNotFoundException;
-import nl.hetckm.bouncer.exceptions.VerdictAlreadyExists;
 import nl.hetckm.bouncer.helper.RelationHelper;
-import nl.hetckm.bouncer.verdict.model.Verdict;
-import nl.hetckm.bouncer.verdict.model.VerdictAddModel;
-import nl.hetckm.bouncer.verdict.model.VerdictResponse;
 import nl.hetckm.bouncer.verification.VerificationService;
-import nl.hetckm.bouncer.verification.model.VerificationStatus;
 import nl.hetckm.bouncer.webhooks.WebhookService;
-import nl.hetckm.bouncer.webhooks.model.WebhookChange;
-import nl.hetckm.bouncer.webhooks.model.WebhookType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,6 @@
 package nl.hetckm.bouncer.auth;
 
-import nl.hetckm.bouncer.auth.model.PlatformLogin;
-import nl.hetckm.bouncer.auth.model.PlatformLoginResult;
-import nl.hetckm.bouncer.auth.model.UserLogin;
-import nl.hetckm.bouncer.auth.model.UserLoginResult;
-import nl.hetckm.bouncer.user.model.UserResponse;
+import nl.hetckm.base.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;

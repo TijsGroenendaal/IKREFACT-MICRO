@@ -1,8 +1,8 @@
 package nl.hetckm.bouncer.challenge;
 
-import nl.hetckm.bouncer.challenge.model.Challenge;
-import nl.hetckm.bouncer.challenge.model.ChallengeStatus;
-import nl.hetckm.bouncer.verification.model.Verification;
+import nl.hetckm.base.enums.ChallengeStatus;
+import nl.hetckm.base.model.Challenge;
+import nl.hetckm.base.model.Verification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.helper;
 
 import io.jsonwebtoken.*;
-import nl.hetckm.bouncer.exceptions.UnauthorizedException;
+import nl.hetckm.base.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
