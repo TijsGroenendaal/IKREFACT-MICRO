@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  bouncer-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bouncer
+      - MYSQL_USER=bouncer
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - bouncer-mysql-volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  gateway-service:
+    build: gateway
+    restart: on-failure
+    ports:
+      - "8080:8080"
+
+  bouncer-service:
+    build: bouncer
+    restart: on-failure
+    env_file: bouncer/.env
+    environment:
+      - DATABASE_HOST
+      - DATABASE_PORT
+      - DATABASE_NAME
+      - DATABASE_USER
+      - DATABASE_PASSWORD
+      - SUPERUSER_USERNAME
+      - SUPERUSER_HASHED_PASSWORD
+      - MAX_UPLOAD_SIZE_MB
+      - MAX_REQUEST_SIZE_MB
+      - STORAGE_PATH
+      - S3_ENDPOINT
+      - S3_REGION
+      - S3_ACCESS_KEY
+      - S3_SECRET_KEY
+      - S3_BUCKET
+      - ENVIRONMENT
+      - USE_GCP_VISION
+      - GCP_PROJECT_ID
+      - GCP_B64_CREDENTIALS
+      - MAX_CHALLENGE_LIFETIME
+      - MAX_DAY_LIFETIME
+      - JWT_COOKIE_NAME
+      - JWT_LIFETIME
+      - JWT_SECRET
+      - JWT_COOKIE_SECURE
+      - CORS_ALLOWED_ORIGINS
+      - JWT_COOKIE_RESTRICT_SITE
+    depends_on:
+      - bouncer-mysql
+    volumes:
+      - ./data:/data
+    ports:
+      - "8081:8081"
+
+volumes:
+  bouncer-mysql-volume:
