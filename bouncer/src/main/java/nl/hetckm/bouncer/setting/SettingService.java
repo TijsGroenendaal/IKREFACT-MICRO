@@ -1,8 +1,8 @@
 package nl.hetckm.bouncer.setting;
 
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.Platform;
 import nl.hetckm.base.model.Setting;
-import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
