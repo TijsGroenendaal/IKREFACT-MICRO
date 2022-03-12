@@ -40,10 +40,11 @@ public class UserService {
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       @Lazy PlatformService platformService
+                       @Lazy PlatformService platformService,
+                       Argon2PasswordEncoder argon2PasswordEncoder
     ) {
         this.userRepository = userRepository;
-        this.argon2PasswordEncoder = new Argon2PasswordEncoder();
+        this.argon2PasswordEncoder = argon2PasswordEncoder;
         this.platformService = platformService;
     }
 

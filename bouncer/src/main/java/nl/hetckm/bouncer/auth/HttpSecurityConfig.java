@@ -37,9 +37,10 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public HttpSecurityConfig(
             UserPrincipalService userPrincipalService,
-            AuthService authService
+            AuthService authService,
+            JwtHelper jwtHelper
     ) {
-        this.jwtHelper = new JwtHelper();
+        this.jwtHelper = jwtHelper;
         this.userPrincipalService = userPrincipalService;
         this.authService = authService;
     }
@@ -92,7 +93,7 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(userPrincipalService, authService);
+        return new TokenAuthenticationFilter(userPrincipalService, authService, jwtHelper);
     }
 
     @Bean

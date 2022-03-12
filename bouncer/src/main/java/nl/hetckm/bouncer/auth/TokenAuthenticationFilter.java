@@ -36,9 +36,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     public TokenAuthenticationFilter(
             UserPrincipalService userPrincipalService,
-            AuthService authService
+            AuthService authService,
+            JwtHelper jwtHelper
     ) {
-        this.jwtHelper = new JwtHelper();
+        this.jwtHelper = jwtHelper;
         this.userPrincipalService = userPrincipalService;
         this.authService = authService;
     }

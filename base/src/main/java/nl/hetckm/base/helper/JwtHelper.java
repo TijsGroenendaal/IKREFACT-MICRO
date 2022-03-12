@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-// @Component TODO using bean will somehow create a conflict with not existing bean in bouncer.auth
+@Component
 public class JwtHelper {
 
     @Value("${jwt.secret}")

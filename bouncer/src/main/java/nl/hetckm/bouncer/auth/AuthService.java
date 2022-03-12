@@ -47,12 +47,14 @@ public class AuthService {
     public AuthService(
             @Lazy UserPrincipalService userPrincipalService,
             @Lazy PlatformService platformService,
-            @Lazy UserService userService
+            @Lazy UserService userService,
+            Argon2PasswordEncoder argon2PasswordEncoder,
+            JwtHelper jwtHelper
     ) {
         this.userPrincipalService = userPrincipalService;
         this.platformService = platformService;
-        this.argon2PasswordEncoder = new Argon2PasswordEncoder();
-        this.jwtHelper = new JwtHelper();
+        this.argon2PasswordEncoder = argon2PasswordEncoder;
+        this.jwtHelper = jwtHelper;
         this.userService = userService;
     }
 
