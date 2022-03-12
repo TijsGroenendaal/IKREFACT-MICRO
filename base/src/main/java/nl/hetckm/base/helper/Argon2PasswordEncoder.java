@@ -31,14 +31,14 @@ public class Argon2PasswordEncoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {
-        String hash = argon2.hash(iterations, memory, parallelism, rawPassword.toString());
+        String hash = argon2.hash(iterations, memory, parallelism, rawPassword.toString().toCharArray());
         argon2.wipeArray(rawPassword.toString().toCharArray());
         return hash;
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String hash) {
-        boolean match = argon2.verify(hash, rawPassword.toString());
+        boolean match = argon2.verify(hash, rawPassword.toString().toCharArray());
         argon2.wipeArray(rawPassword.toString().toCharArray());
         return match;
     }
