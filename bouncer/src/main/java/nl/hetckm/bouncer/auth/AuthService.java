@@ -4,16 +4,13 @@ import nl.hetckm.base.exceptions.AppUserDisabledException;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.WrongCredentialsException;
 import nl.hetckm.base.helper.Argon2PasswordEncoder;
-import nl.hetckm.base.model.*;
 import nl.hetckm.base.helper.JwtHelper;
+import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import nl.hetckm.bouncer.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpCookie;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,15 +24,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
-
-    @Value("${jwt.cookie-name}")
-    private String cookieName;
-
-    @Value("${jwt.cookie-secure}")
-    private Boolean secureCookie;
-
-    @Value("${jwt.cookie.restrict-site}")
-    private Boolean sameSiteStrict;
 
     private final UserPrincipalService userPrincipalService;
     private final PlatformService platformService;
@@ -106,14 +94,6 @@ public class AuthService {
         return new UserResponse(user);
     }
 
-    public HttpCookie createCookie(String value, long maxAge) {
-        return ResponseCookie.from(cookieName, value)
-                .path("/")
-                .httpOnly(true)
-                .maxAge(maxAge)
-                .secure(secureCookie)
-                .sameSite(sameSiteStrict ? "Strict" : "Lax")
-                .build();
-    }
+
 
 }

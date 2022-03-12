@@ -1,6 +1,7 @@
 package nl.hetckm.bouncer.auth;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
+import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +31,22 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
     private String allowedOrigins;
 
     public static final String AUTHORITIES_CLAIM_NAME = "role";
-    public final JwtHelper jwtHelper;
-    public final UserPrincipalService userPrincipalService;
-    public final AuthService authService;
+    private final JwtHelper jwtHelper;
+    private final UserPrincipalService userPrincipalService;
+    private final AuthService authService;
+    private final CookieHelper cookieHelper;
 
     @Autowired
     public HttpSecurityConfig(
             UserPrincipalService userPrincipalService,
             AuthService authService,
-            JwtHelper jwtHelper
+            JwtHelper jwtHelper,
+            CookieHelper cookieHelper
     ) {
         this.jwtHelper = jwtHelper;
         this.userPrincipalService = userPrincipalService;
         this.authService = authService;
+        this.cookieHelper = cookieHelper;
     }
 
     @Override
@@ -93,7 +97,7 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(userPrincipalService, authService, jwtHelper);
+        return new TokenAuthenticationFilter(userPrincipalService, authService, jwtHelper, cookieHelper);
     }
 
     @Bean

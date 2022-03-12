@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.auth;
 
+import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final CookieHelper cookieHelper;
 
     @Value("${jwt.lifetime}")
     private Long lifetime;
@@ -20,14 +22,18 @@ public class AuthController {
     private static final int millisecondsToSeconds = 1000;
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(
+            AuthService authService,
+            CookieHelper cookieHelper
+    ) {
         this.authService = authService;
+        this.cookieHelper = cookieHelper;
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponse> loginUser(@RequestBody UserLogin userLogin) {
         UserLoginResult result = authService.loginUser(userLogin);
-        HttpCookie cookie =  authService.createCookie(result.getToken(), lifetime / millisecondsToSeconds);
+        HttpCookie cookie =  cookieHelper.createCookie(result.getToken(), lifetime / millisecondsToSeconds);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(result.getUser());
@@ -35,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<UserLoginResult> logoutUser() {
-        HttpCookie cookie = authService.createCookie("", 0);
+        HttpCookie cookie = cookieHelper.createCookie("", 0);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(null);

@@ -1,6 +1,7 @@
 package nl.hetckm.bouncer.auth;
 
 import io.jsonwebtoken.ClaimJwtException;
+import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final JwtHelper jwtHelper;
     private final UserPrincipalService userPrincipalService;
     private final AuthService authService;
+    private final CookieHelper cookieHelper;
     private final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
     @Value("${jwt.cookie-name}")
@@ -37,11 +39,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     public TokenAuthenticationFilter(
             UserPrincipalService userPrincipalService,
             AuthService authService,
-            JwtHelper jwtHelper
+            JwtHelper jwtHelper,
+            CookieHelper cookieHelper
     ) {
         this.jwtHelper = jwtHelper;
         this.userPrincipalService = userPrincipalService;
         this.authService = authService;
+        this.cookieHelper = cookieHelper;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 try {
                     decodedToken = jwtHelper.decode(jwt);
                 } catch (ClaimJwtException e){
-                   HttpCookie httpCookie = authService.createCookie("", 0);
+                   HttpCookie httpCookie = cookieHelper.createCookie("", 0);
                    Cookie cookie = new Cookie(httpCookie.getName(), httpCookie.getValue());
                    httpServletResponse.addCookie(cookie);
                    httpServletResponse.setStatus(401);
