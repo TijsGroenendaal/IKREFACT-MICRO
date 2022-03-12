@@ -3,7 +3,7 @@ package nl.hetckm.bouncer.preset;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.model.Platform;
 import nl.hetckm.base.model.Preset;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

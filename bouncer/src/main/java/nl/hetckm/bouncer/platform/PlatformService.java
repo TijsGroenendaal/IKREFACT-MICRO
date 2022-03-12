@@ -4,7 +4,7 @@ import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.InvalidJwtException;
 import nl.hetckm.base.exceptions.UsernameExistsException;
 import nl.hetckm.base.model.*;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.media.EncryptionService;
 import nl.hetckm.bouncer.user.UserService;
 import org.slf4j.Logger;

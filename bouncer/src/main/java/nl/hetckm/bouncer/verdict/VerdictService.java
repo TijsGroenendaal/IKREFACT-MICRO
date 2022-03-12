@@ -11,7 +11,7 @@ import nl.hetckm.base.model.Verdict;
 import nl.hetckm.base.model.VerdictAddModel;
 import nl.hetckm.base.model.VerdictResponse;
 import nl.hetckm.bouncer.challenge.ChallengeService;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.verification.VerificationService;
 import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;

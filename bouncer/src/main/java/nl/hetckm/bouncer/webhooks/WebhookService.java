@@ -8,7 +8,7 @@ import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.model.Platform;
 import nl.hetckm.base.model.Webhook;
 import nl.hetckm.base.model.WebhookBody;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -6,7 +6,7 @@ import nl.hetckm.base.enums.WebhookType;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.challenge.ChallengeService;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;

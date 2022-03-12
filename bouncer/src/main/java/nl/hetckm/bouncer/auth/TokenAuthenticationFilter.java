@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.auth;
 
 import io.jsonwebtoken.ClaimJwtException;
-import nl.hetckm.bouncer.helper.JwtHelper;
+import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +35,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     public TokenAuthenticationFilter(
-            JwtHelper jwtHelper,
             UserPrincipalService userPrincipalService,
             AuthService authService
     ) {
-        this.jwtHelper = jwtHelper;
+        this.jwtHelper = new JwtHelper();
         this.userPrincipalService = userPrincipalService;
         this.authService = authService;
     }

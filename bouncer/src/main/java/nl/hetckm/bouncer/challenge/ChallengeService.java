@@ -9,7 +9,7 @@ import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.NotAllChallengesReviewedException;
 import nl.hetckm.base.exceptions.VerificationLifetimeReachedException;
 import nl.hetckm.base.model.*;
-import nl.hetckm.bouncer.helper.RelationHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.preset.PresetService;
 import nl.hetckm.bouncer.verification.VerificationService;
@@ -34,7 +34,7 @@ public class ChallengeService {
 
     private final WebhookService webhookService;
 
-    private String environment = "develop";
+    private final String environment = "develop";
 
     @Autowired
     public ChallengeService(

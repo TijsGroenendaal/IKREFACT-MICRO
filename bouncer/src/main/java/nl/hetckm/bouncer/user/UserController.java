@@ -3,9 +3,11 @@ package nl.hetckm.bouncer.user;
 import nl.hetckm.base.model.AppUser;
 import nl.hetckm.base.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,10 +20,15 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final UserPrincipalService userPrincipalService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(
+            UserService userService,
+            @Lazy UserPrincipalService userPrincipalService
+    ){
         this.userService = userService;
+        this.userPrincipalService = userPrincipalService;
     }
 
     @PostMapping()
@@ -64,5 +71,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID id) {
         userService.delete(id);
+    }
+
+    @GetMapping("userdetails/{name}")
+    public UserDetails getUserDetails(@PathVariable String name) {
+        return userPrincipalService.loadUserByUsername(name);
     }
 }

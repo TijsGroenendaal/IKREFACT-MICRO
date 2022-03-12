@@ -1,4 +1,4 @@
-package nl.hetckm.bouncer.helper;
+package nl.hetckm.base.helper;
 
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import org.springframework.security.core.GrantedAuthority;

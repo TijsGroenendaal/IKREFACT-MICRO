@@ -1,4 +1,4 @@
-package nl.hetckm.bouncer.helper;
+package nl.hetckm.base.helper;
 
 import io.jsonwebtoken.*;
 import nl.hetckm.base.exceptions.UnauthorizedException;
@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-@Component
+// @Component TODO using bean will somehow create a conflict with not existing bean in bouncer.auth
 public class JwtHelper {
 
     @Value("${jwt.secret}")

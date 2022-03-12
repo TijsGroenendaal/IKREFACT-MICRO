@@ -1,11 +1,11 @@
-package nl.hetckm.bouncer.auth;
+package nl.hetckm.base.helper;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component TODO using bean will somehow create a conflict with not existing bean in bouncer.auth
 public class Argon2PasswordEncoder implements PasswordEncoder {
 
     private static final int DEFAULT_PARALLELISM = 1;

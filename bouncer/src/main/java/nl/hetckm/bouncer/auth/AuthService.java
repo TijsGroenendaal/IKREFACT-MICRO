@@ -3,8 +3,9 @@ package nl.hetckm.bouncer.auth;
 import nl.hetckm.base.exceptions.AppUserDisabledException;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.WrongCredentialsException;
+import nl.hetckm.base.helper.Argon2PasswordEncoder;
 import nl.hetckm.base.model.*;
-import nl.hetckm.bouncer.helper.JwtHelper;
+import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import nl.hetckm.bouncer.user.UserService;
@@ -46,14 +47,12 @@ public class AuthService {
     public AuthService(
             @Lazy UserPrincipalService userPrincipalService,
             @Lazy PlatformService platformService,
-            Argon2PasswordEncoder argon2PasswordEncoder,
-            JwtHelper jwtHelper,
             @Lazy UserService userService
     ) {
         this.userPrincipalService = userPrincipalService;
         this.platformService = platformService;
-        this.argon2PasswordEncoder = argon2PasswordEncoder;
-        this.jwtHelper = jwtHelper;
+        this.argon2PasswordEncoder = new Argon2PasswordEncoder();
+        this.jwtHelper = new JwtHelper();
         this.userService = userService;
     }
 
