@@ -2,6 +2,7 @@ package nl.hetckm.base.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.hetckm.base.enums.Role;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 

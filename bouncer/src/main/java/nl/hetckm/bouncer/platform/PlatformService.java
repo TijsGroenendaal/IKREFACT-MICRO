@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.platform;
 
+import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.InvalidJwtException;
 import nl.hetckm.base.exceptions.UsernameExistsException;

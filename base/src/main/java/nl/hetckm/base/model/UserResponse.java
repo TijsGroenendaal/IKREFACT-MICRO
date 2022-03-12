@@ -1,6 +1,7 @@
 package nl.hetckm.base.model;
 
 import lombok.Value;
+import nl.hetckm.base.enums.Role;
 
 import java.util.UUID;
 

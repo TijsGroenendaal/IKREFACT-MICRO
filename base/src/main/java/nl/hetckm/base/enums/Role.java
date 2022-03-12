@@ -1,4 +1,4 @@
-package nl.hetckm.base.model;
+package nl.hetckm.base.enums;
 
 public enum Role {
     SUPERUSER("superuser"),
