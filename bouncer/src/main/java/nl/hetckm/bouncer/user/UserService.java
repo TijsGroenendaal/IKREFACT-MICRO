@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.user;
 
+import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.ForbiddenException;
 import nl.hetckm.base.exceptions.NoPlatformSpecifiedException;
@@ -8,7 +9,6 @@ import nl.hetckm.base.helper.Argon2PasswordEncoder;
 import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.AppUser;
 import nl.hetckm.base.model.Platform;
-import nl.hetckm.base.enums.Role;
 import nl.hetckm.bouncer.platform.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
