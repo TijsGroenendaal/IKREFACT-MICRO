@@ -88,11 +88,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                         AppUser.class
                 ).getBody();
 
+                String[] userAuthorities = { appUser.getRole().toString() };
+                if (appUser.getPlatform() != null) {
+                    userAuthorities = new String[]{appUser.getRole().toString(), appUser.getPlatform().getId().toString()};
+                }
+
                 final UserDetails userDetails = User.builder()
                                 .username(appUser.getUsername())
                                 .password(appUser.getPassword())
                                 .disabled(!appUser.isEnabled())
-                                .authorities(new String[]{appUser.getRole().toString()})
+                                .authorities(userAuthorities)
                                 .build();
                 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
