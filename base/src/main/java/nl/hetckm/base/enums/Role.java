@@ -4,7 +4,8 @@ public enum Role {
     SUPERUSER("superuser"),
     ADMIN("admin"),
     MODERATOR("moderator"),
-    PLATFORM("platform");
+    PLATFORM("platform"),
+    SERVICE("service");
 
     public final String value;
 

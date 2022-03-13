@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
 @Service
 public class AuthService {
 
+    public static final String AUTHORITIES_CLAIM_NAME = "role";
+
     private final UserPrincipalService userPrincipalService;
     private final PlatformService platformService;
     private final Argon2PasswordEncoder argon2PasswordEncoder;
@@ -66,7 +68,7 @@ public class AuthService {
         String authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
-        claims.put(HttpSecurityConfig.AUTHORITIES_CLAIM_NAME, authorities);
+        claims.put(AUTHORITIES_CLAIM_NAME, authorities);
 
         String jwt = jwtHelper.createJwtForClaims(userLogin.getUsername(), claims);
 
@@ -79,7 +81,7 @@ public class AuthService {
             Platform platform = platformService.findOneByApiKey(platformLogin.getApiKey());
 
             Map<String, Object> claims = new HashMap<>();
-            claims.put(HttpSecurityConfig.AUTHORITIES_CLAIM_NAME, "PLATFORM " + platform.getId().toString());
+            claims.put(AUTHORITIES_CLAIM_NAME, "PLATFORM " + platform.getId().toString());
 
             String jwt = jwtHelper.createJwtForClaims(platform.getId().toString(), claims);
             return new PlatformLoginResult(jwt);

@@ -13,6 +13,7 @@
     </properties>
 
     <modules>
+        <module>security</module>
         <module>base</module>
         <module>bouncer</module>
         <module>gateway</module>

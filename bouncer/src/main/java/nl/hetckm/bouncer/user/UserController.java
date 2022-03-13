@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
 @RestController()
 @RequestMapping("/user")
 public class UserController {
@@ -31,6 +31,7 @@ public class UserController {
         this.userPrincipalService = userPrincipalService;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
@@ -38,6 +39,7 @@ public class UserController {
         return new UserResponse(userService.create(appUser));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
     @GetMapping()
     public @ResponseBody
     Page<UserResponse> getUsersByPlatform(
@@ -52,12 +54,14 @@ public class UserController {
         return new PageImpl<>(userResponseList, pageable, users.getTotalElements());
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
     @GetMapping("/{id}")
     public @ResponseBody
     UserResponse getUser(@PathVariable UUID id) {
         return new UserResponse(userService.findOne(id));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
     @PatchMapping("/{id}")
     public @ResponseBody
     UserResponse updateUser(
@@ -67,6 +71,7 @@ public class UserController {
         return new UserResponse(userService.update(id, appUser));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERUSER')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID id) {
@@ -74,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping("userdetails/{name}")
-    public UserDetails getUserDetails(@PathVariable String name) {
-        return userPrincipalService.loadUserByUsername(name);
+    public User getUserDetails(@PathVariable String name) {
+        return (User) userPrincipalService.loadUserByUsername(name);
     }
 }
