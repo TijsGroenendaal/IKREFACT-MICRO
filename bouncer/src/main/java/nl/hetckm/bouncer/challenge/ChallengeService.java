@@ -15,6 +15,7 @@ import nl.hetckm.bouncer.preset.PresetService;
 import nl.hetckm.bouncer.verification.VerificationService;
 import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,8 @@ public class ChallengeService {
 
     private final WebhookService webhookService;
 
-    private final String environment = "develop";
+    @Value("${environment}")
+    private String environment;
 
     @Autowired
     public ChallengeService(

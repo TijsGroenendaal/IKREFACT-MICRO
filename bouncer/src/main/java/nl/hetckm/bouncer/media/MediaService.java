@@ -9,6 +9,7 @@ import nl.hetckm.bouncer.media.aws.S3Service;
 import nl.hetckm.bouncer.media.filesystem.FileSystemService;
 import nl.hetckm.bouncer.media.vision.VisionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -32,7 +33,8 @@ public class MediaService {
     private final VisionService visionService;
     private final EncryptionService encryptionService;
 
-    private final String environment = "develop";
+    @Value("${environment}")
+    private String environment;
 
     @Autowired
     public MediaService(
