@@ -59,4 +59,10 @@ public class PresetController {
     public PresetResponse patchPreset(@PathVariable UUID presetId, @RequestBody Preset preset) {
         return new PresetResponse(presetService.patchPreset(presetId, preset));
     }
+
+    @PreAuthorize("hasAuthority('SERVICE')")
+    @DeleteMapping("/platform/{platformId}")
+    public void deleteAllByPlatform(@PathVariable UUID platformId) {
+        presetService.deleteByPlatform(platformId);
+    }
 }

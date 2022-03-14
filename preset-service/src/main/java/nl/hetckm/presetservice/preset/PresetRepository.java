@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PresetRepository extends PagingAndSortingRepository<Preset, UUID> {
     Page<Preset> getAllByPlatformId(UUID platformId, Pageable pageable);
+    void deleteAllByPlatformId(UUID platformId);
 }

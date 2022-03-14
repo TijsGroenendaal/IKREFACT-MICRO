@@ -49,4 +49,8 @@ public class PresetService {
 
         return presetRepository.save(oldPreset);
     }
+
+    public void deleteByPlatform(UUID platformId) {
+        presetRepository.deleteAllByPlatformId(platformId);
+    }
 }

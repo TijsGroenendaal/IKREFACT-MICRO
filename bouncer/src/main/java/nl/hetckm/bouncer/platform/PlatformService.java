@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.platform;
 
+import nl.hetckm.base.dao.PresetDAO;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.InvalidJwtException;
@@ -31,6 +32,7 @@ public class PlatformService {
     private final PlatformRepository platformRepository;
     private final UserService userService;
     private final EncryptionService encryptionService;
+    private final PresetDAO presetDAO;
 
     @Value("${lifetime.challenge}")
     private int MAX_CHALLENGE_LIFETIME;
@@ -42,11 +44,13 @@ public class PlatformService {
     public PlatformService(
             PlatformRepository platformRepository,
             EncryptionService encryptionService,
-            @Lazy UserService userService
+            @Lazy UserService userService,
+            PresetDAO presetDAO
     ) {
         this.platformRepository = platformRepository;
         this.encryptionService = encryptionService;
         this.userService = userService;
+        this.presetDAO = presetDAO;
     }
 
     public NewPlatformResponse create(String username, String userPassword, Platform platform) {
@@ -110,17 +114,14 @@ public class PlatformService {
     public void delete(UUID id) {
         try {
             platformRepository.deleteById(id);
+            presetDAO.deleteAllByPlatform(id);
         } catch (IllegalArgumentException e) {
             throw new EntityNotFoundException(Platform.class);
         }
     }
 
     public void deleteOwn() {
-        try {
-            platformRepository.deleteById(RelationHelper.getPlatformId());
-        } catch (IllegalArgumentException e) {
-            throw new EntityNotFoundException(Platform.class);
-        }
+        delete(RelationHelper.getPlatformId());
     }
 
     public Platform findOwned() {

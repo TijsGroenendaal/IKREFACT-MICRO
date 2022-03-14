@@ -56,4 +56,22 @@ public class PresetDAO {
         ).getBody();
     }
 
+    public void deleteAllByPlatform(UUID platformId) {
+        final Map<String, Object> authorities = new HashMap<>();
+        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
+                "service",
+                authorities
+        ), 10).toString());
+
+        final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        new RestTemplate().delete(
+                "http://preset-service:"+ presetServicePort +"/preset/platform/" + platformId,
+                HttpMethod.DELETE,
+                entity
+        );
+    }
+
 }
