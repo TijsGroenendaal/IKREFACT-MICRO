@@ -29,7 +29,7 @@ public class Preset {
     private double maxRange;
     private double longitude;
     private double latitude;
-
+    @org.hibernate.annotations.Type(type="uuid-char")
     private UUID platformId;
 
     public void setChanges(Preset preset) {
