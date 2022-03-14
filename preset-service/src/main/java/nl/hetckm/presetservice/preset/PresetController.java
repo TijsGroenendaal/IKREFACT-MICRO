@@ -1,4 +1,4 @@
-package nl.hetckm.bouncer.preset;
+package nl.hetckm.presetservice.preset;
 
 import nl.hetckm.base.model.Preset;
 import nl.hetckm.base.model.PresetResponse;
@@ -36,7 +36,7 @@ public class PresetController {
         return new PageImpl<>(presetResponseList, pageable, presets.getTotalElements());
     }
 
-    @PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN', 'SERVICE')")
     @GetMapping(value = "/{presetId}")
     public PresetResponse getPreset(@PathVariable UUID presetId) {
         return new PresetResponse(presetService.getPreset(presetId));

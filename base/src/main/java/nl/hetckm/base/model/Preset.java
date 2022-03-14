@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
@@ -28,8 +30,7 @@ public class Preset {
     private double longitude;
     private double latitude;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private Platform platform;
+    private UUID platformId;
 
     public void setChanges(Preset preset) {
         this.challengeText = preset.challengeText;

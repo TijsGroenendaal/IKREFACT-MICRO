@@ -25,7 +25,7 @@ public class PresetResponse {
     public PresetResponse(Preset entity) {
         this.Id = entity.getId();
         this.challengeText = entity.getChallengeText();
-        this.platformId = entity.getPlatform().getId();
+        this.platformId = entity.getPlatformId();
         this.useLandmarkDetection = entity.isUseLandmarkDetection();
         this.landmarkMatch = entity.getLandmarkMatch();
         this.useTextDetection = entity.isUseTextDetection();

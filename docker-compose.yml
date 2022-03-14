@@ -38,5 +38,28 @@ services:
     ports:
       - "8081:8081"
 
+  preset-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=preset
+      - MYSQL_USER=bouncer
+      - MYSQL_PASSWORD=admin
+      - MYSQL_TCP_PORT=3307
+    volumes:
+      - preset-mysql-volume:/var/lib/mysql
+    ports:
+      - "3307:3307"
+
+  preset-service:
+    build: preset-service
+    restart: on-failure
+    env_file: .env
+    depends_on:
+      - preset-mysql
+    ports:
+      - "8083:8083"
+
 volumes:
   bouncer-mysql-volume:
+  preset-mysql-volume:

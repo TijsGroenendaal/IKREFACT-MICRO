@@ -10,6 +10,7 @@ import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import nl.hetckm.bouncer.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class AuthService {
 
-    public static final String AUTHORITIES_CLAIM_NAME = "role";
+    @Value("${AUTHORITIES_CLAIM_NAME}")
+    private String AUTHORITIES_CLAIM_NAME;
 
     private final UserPrincipalService userPrincipalService;
     private final PlatformService platformService;

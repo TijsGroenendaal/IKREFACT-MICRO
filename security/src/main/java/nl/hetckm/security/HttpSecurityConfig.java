@@ -29,7 +29,9 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
-    public static final String AUTHORITIES_CLAIM_NAME = "role";
+    @Value("${AUTHORITIES_CLAIM_NAME}")
+    private String AUTHORITIES_CLAIM_NAME;
+
     private final JwtHelper jwtHelper;
     private final CookieHelper cookieHelper;
 

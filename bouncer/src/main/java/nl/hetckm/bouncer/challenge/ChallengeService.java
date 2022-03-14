@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.challenge;
 
+import nl.hetckm.base.dao.PresetDAO;
 import nl.hetckm.base.enums.ChallengeStatus;
 import nl.hetckm.base.enums.VerificationStatus;
 import nl.hetckm.base.enums.WebhookChange;
@@ -11,7 +12,6 @@ import nl.hetckm.base.exceptions.VerificationLifetimeReachedException;
 import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.*;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.preset.PresetService;
 import nl.hetckm.bouncer.verification.VerificationService;
 import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final VerificationService verificationService;
     private final PlatformService platformService;
-    private final PresetService presetService;
+    private final PresetDAO presetDAO;
 
     private final WebhookService webhookService;
 
@@ -43,13 +43,13 @@ public class ChallengeService {
             ChallengeRepository challengeRepository,
             WebhookService webhookService,
             PlatformService platformService,
-            PresetService presetService,
+            PresetDAO presetDAO,
             @Lazy VerificationService verificationService
     ) {
         this.challengeRepository = challengeRepository;
         this.webhookService = webhookService;
         this.platformService = platformService;
-        this.presetService = presetService;
+        this.presetDAO = presetDAO;
         this.verificationService = verificationService;
     }
 
@@ -93,7 +93,7 @@ public class ChallengeService {
     }
 
     public Challenge save(UUID presetId, UUID verificationId) {
-        final Preset preset = presetService.getPreset(presetId);
+        final Preset preset = presetDAO.getOne(presetId);
         return save(preset, verificationId);
     }
 

@@ -28,9 +28,6 @@ public class Platform {
     private Set<Verification> verifications;
 
     @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Preset> presets;
-
-    @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AppUser> users;
 
     @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -41,8 +41,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Value("${jwt.cookie-name}")
     private String cookieName;
 
-    @Value("${userdetails.port}")
+    @Value("${USER_DETAILS_SERVICE_PORT}")
     private String userDetailsPort;
+
+    @Value("${AUTHORITIES_CLAIM_NAME}")
+    private String AUTHORITIES_CLAIM_NAME;
 
     @Autowired
     public TokenAuthenticationFilter(
@@ -72,7 +75,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 String username = decodedToken.getSubject();
 
                 final Map<String, Object> authorities = new HashMap<>();
-                authorities.put(HttpSecurityConfig.AUTHORITIES_CLAIM_NAME, Role.SERVICE);
+                authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
 
                 final HttpHeaders headers = new HttpHeaders();
                 headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(

@@ -1,10 +1,8 @@
-package nl.hetckm.bouncer.preset;
+package nl.hetckm.presetservice.preset;
 
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.helper.RelationHelper;
-import nl.hetckm.base.model.Platform;
 import nl.hetckm.base.model.Preset;
-import nl.hetckm.bouncer.platform.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,29 +14,24 @@ import java.util.UUID;
 public class PresetService {
 
     private final PresetRepository presetRepository;
-    private final PlatformService platformService;
-
 
     @Autowired
-    public PresetService(PresetRepository presetRepository, PlatformService platformService) {
+    public PresetService(PresetRepository presetRepository) {
         this.presetRepository = presetRepository;
-        this.platformService = platformService;
     }
 
     public Page<Preset> getAllPresetsFromPlatform(Pageable pageable) {
-        Platform platform = platformService.findOne(RelationHelper.getPlatformId());
-        return presetRepository.getAllByPlatform(platform, pageable);
+        return presetRepository.getAllByPlatformId(RelationHelper.getPlatformId(), pageable);
     }
 
     public Preset getPreset(UUID ID) {
         final Preset preset = presetRepository.findById(ID).orElseThrow(() -> new EntityNotFoundException(Preset.class));
-        RelationHelper.isFromParent(preset.getPlatform().getId(), RelationHelper.getPlatformId(), Preset.class);
+        RelationHelper.isFromParent(preset.getPlatformId(), RelationHelper.getPlatformId(), Preset.class);
         return preset;
     }
 
     public Preset addPreset(Preset preset) {
-        Platform platform = platformService.findOne(RelationHelper.getPlatformId());
-        preset.setPlatform(platform);
+        preset.setPlatformId(RelationHelper.getPlatformId());
         return presetRepository.save(preset);
     }
 
