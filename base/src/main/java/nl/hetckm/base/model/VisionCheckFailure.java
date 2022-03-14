@@ -1,9 +1,9 @@
 package nl.hetckm.base.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.google.cloud.vision.v1.Feature;
 import lombok.Getter;
 import lombok.Setter;
+import nl.hetckm.base.enums.BouncerFeature;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,15 +22,15 @@ public class VisionCheckFailure {
     String reason;
 
     @Enumerated(EnumType.STRING)
-    Feature.Type type;
+    BouncerFeature type;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JsonBackReference(value = "challenge-vision")
     private Media media;
 
-    public VisionCheckFailure(String reason, Feature.Type type, Media media) {
+    public VisionCheckFailure(String reason, Enum<?> type, Media media) {
         this.reason = reason;
-        this.type = type;
+        this.type = BouncerFeature.valueOf(type.toString());
         this.media = media;
     }
 
