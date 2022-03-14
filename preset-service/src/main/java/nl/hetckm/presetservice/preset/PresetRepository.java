@@ -1,6 +1,6 @@
 package nl.hetckm.presetservice.preset;
 
-import nl.hetckm.base.model.Preset;
+import nl.hetckm.base.model.preset.Preset;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

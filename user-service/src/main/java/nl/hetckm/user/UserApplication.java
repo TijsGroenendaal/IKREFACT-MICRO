@@ -1,6 +1,6 @@
 package nl.hetckm.user;
 
-import nl.hetckm.base.model.AppUser;
+import nl.hetckm.base.model.bouncer.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

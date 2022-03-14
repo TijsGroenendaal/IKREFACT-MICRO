@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.predefs;
 
-import nl.hetckm.base.model.Platform;
-import nl.hetckm.base.model.Predef;
+import nl.hetckm.base.model.bouncer.Platform;
+import nl.hetckm.base.model.bouncer.Predef;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -1,8 +1,8 @@
 package nl.hetckm.bouncer.webhooks;
 
 import nl.hetckm.base.enums.WebhookType;
-import nl.hetckm.base.model.Platform;
-import nl.hetckm.base.model.Webhook;
+import nl.hetckm.base.model.bouncer.Platform;
+import nl.hetckm.base.model.bouncer.Webhook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

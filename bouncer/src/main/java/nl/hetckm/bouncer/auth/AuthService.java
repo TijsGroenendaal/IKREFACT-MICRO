@@ -5,7 +5,7 @@ import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.WrongCredentialsException;
 import nl.hetckm.base.helper.Argon2PasswordEncoder;
 import nl.hetckm.base.helper.JwtHelper;
-import nl.hetckm.base.model.*;
+import nl.hetckm.base.model.bouncer.*;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.user.UserPrincipalService;
 import nl.hetckm.bouncer.user.UserService;

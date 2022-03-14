@@ -1,6 +1,6 @@
 package nl.hetckm.bouncer.media.exif;
 
-import nl.hetckm.base.model.Exif;
+import nl.hetckm.base.model.bouncer.Exif;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

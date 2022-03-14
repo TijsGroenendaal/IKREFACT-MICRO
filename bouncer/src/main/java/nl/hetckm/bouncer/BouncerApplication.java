@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication(scanBasePackages = "nl.hetckm")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EntityScan("nl.hetckm.base.model")
+@EntityScan("nl.hetckm.base.model.bouncer")
 public class BouncerApplication {
 
     public static void main(String[] args) {

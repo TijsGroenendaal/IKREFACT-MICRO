@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.user;
 
-import nl.hetckm.base.model.AppUser;
-import nl.hetckm.base.model.Platform;
+import nl.hetckm.base.model.bouncer.AppUser;
+import nl.hetckm.base.model.bouncer.Platform;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

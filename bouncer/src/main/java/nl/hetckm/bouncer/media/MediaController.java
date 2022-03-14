@@ -2,9 +2,9 @@ package nl.hetckm.bouncer.media;
 
 import nl.hetckm.base.exceptions.NoFileAssociatedWithMediaException;
 import nl.hetckm.base.exceptions.UnsupportedMediaFormatException;
-import nl.hetckm.base.model.Exif;
-import nl.hetckm.base.model.Media;
-import nl.hetckm.base.model.MediaResponse;
+import nl.hetckm.base.model.bouncer.Exif;
+import nl.hetckm.base.model.bouncer.Media;
+import nl.hetckm.base.model.bouncer.MediaResponse;
 import nl.hetckm.bouncer.media.exif.ExifService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.verdict;
 
-import nl.hetckm.base.model.VerdictAddModel;
-import nl.hetckm.base.model.VerdictResponse;
+import nl.hetckm.base.model.bouncer.VerdictAddModel;
+import nl.hetckm.base.model.bouncer.VerdictResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;

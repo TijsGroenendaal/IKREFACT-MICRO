@@ -1,6 +1,6 @@
 package nl.hetckm.bouncer.media.gps;
 
-import nl.hetckm.base.model.Exif;
+import nl.hetckm.base.model.bouncer.Exif;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

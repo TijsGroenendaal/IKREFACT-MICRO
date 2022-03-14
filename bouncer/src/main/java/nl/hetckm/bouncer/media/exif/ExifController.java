@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.media.exif;
 
-import nl.hetckm.base.model.ExifResponse;
-import nl.hetckm.base.model.Media;
+import nl.hetckm.base.model.bouncer.ExifResponse;
+import nl.hetckm.base.model.bouncer.Media;
 import nl.hetckm.bouncer.media.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

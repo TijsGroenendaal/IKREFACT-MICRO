@@ -4,7 +4,7 @@ import io.jsonwebtoken.ClaimJwtException;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
-import nl.hetckm.base.model.AppUser;
+import nl.hetckm.base.model.bouncer.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

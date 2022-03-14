@@ -1,7 +1,7 @@
 package nl.hetckm.presetservice.preset;
 
-import nl.hetckm.base.model.Preset;
-import nl.hetckm.base.model.PresetResponse;
+import nl.hetckm.base.model.preset.Preset;
+import nl.hetckm.base.model.preset.PresetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;

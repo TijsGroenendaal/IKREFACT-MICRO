@@ -2,8 +2,8 @@ package nl.hetckm.user;
 
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
-import nl.hetckm.base.model.AppUser;
-import nl.hetckm.base.model.Platform;
+import nl.hetckm.base.model.bouncer.AppUser;
+import nl.hetckm.base.model.bouncer.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

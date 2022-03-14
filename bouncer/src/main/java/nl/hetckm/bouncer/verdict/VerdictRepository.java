@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.verdict;
 
-import nl.hetckm.base.model.Challenge;
-import nl.hetckm.base.model.Verdict;
+import nl.hetckm.base.model.bouncer.Challenge;
+import nl.hetckm.base.model.bouncer.Verdict;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

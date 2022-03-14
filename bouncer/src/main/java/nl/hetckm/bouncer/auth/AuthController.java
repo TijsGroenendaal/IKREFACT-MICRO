@@ -1,7 +1,7 @@
 package nl.hetckm.bouncer.auth;
 
 import nl.hetckm.base.helper.CookieHelper;
-import nl.hetckm.base.model.*;
+import nl.hetckm.base.model.bouncer.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;

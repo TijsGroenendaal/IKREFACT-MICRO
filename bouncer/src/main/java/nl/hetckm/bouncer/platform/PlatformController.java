@@ -1,9 +1,9 @@
 package nl.hetckm.bouncer.platform;
 
-import nl.hetckm.base.model.NewPlatformRequest;
-import nl.hetckm.base.model.NewPlatformResponse;
-import nl.hetckm.base.model.Platform;
-import nl.hetckm.base.model.PlatformResponse;
+import nl.hetckm.base.model.bouncer.NewPlatformRequest;
+import nl.hetckm.base.model.bouncer.NewPlatformResponse;
+import nl.hetckm.base.model.bouncer.Platform;
+import nl.hetckm.base.model.bouncer.PlatformResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;

@@ -3,7 +3,7 @@ package nl.hetckm.base.dao;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
-import nl.hetckm.base.model.Preset;
+import nl.hetckm.base.model.preset.Preset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

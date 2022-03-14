@@ -1,9 +1,9 @@
 package nl.hetckm.bouncer.challenge;
 
-import nl.hetckm.base.model.Challenge;
-import nl.hetckm.base.model.ChallengeResponse;
-import nl.hetckm.base.model.ChallengeUpdate;
-import nl.hetckm.base.model.NewChallengeRequest;
+import nl.hetckm.base.model.bouncer.Challenge;
+import nl.hetckm.base.model.bouncer.ChallengeResponse;
+import nl.hetckm.base.model.bouncer.ChallengeUpdate;
+import nl.hetckm.base.model.bouncer.NewChallengeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;

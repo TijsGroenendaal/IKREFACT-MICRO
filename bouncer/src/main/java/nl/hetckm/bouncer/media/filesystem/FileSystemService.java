@@ -1,6 +1,6 @@
 package nl.hetckm.bouncer.media.filesystem;
 
-import nl.hetckm.base.model.UploadResult;
+import nl.hetckm.base.model.bouncer.UploadResult;
 import nl.hetckm.bouncer.media.StorageSolution;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;

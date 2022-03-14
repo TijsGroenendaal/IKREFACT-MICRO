@@ -2,7 +2,7 @@ package nl.hetckm.presetservice.preset;
 
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.helper.RelationHelper;
-import nl.hetckm.base.model.Preset;
+import nl.hetckm.base.model.preset.Preset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
 package nl.hetckm.base.exceptions;
 
-import nl.hetckm.base.model.Verification;
+import nl.hetckm.base.model.bouncer.Verification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

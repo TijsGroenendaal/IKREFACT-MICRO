@@ -3,7 +3,7 @@ package nl.hetckm.bouncer.media;
 import nl.hetckm.base.enums.StorageType;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.helper.RelationHelper;
-import nl.hetckm.base.model.*;
+import nl.hetckm.base.model.bouncer.*;
 import nl.hetckm.bouncer.challenge.ChallengeService;
 import nl.hetckm.bouncer.media.aws.S3Service;
 import nl.hetckm.bouncer.media.filesystem.FileSystemService;

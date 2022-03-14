@@ -2,8 +2,8 @@ package nl.hetckm.bouncer.scheduler;
 
 import nl.hetckm.base.enums.ChallengeStatus;
 import nl.hetckm.base.enums.VerificationStatus;
-import nl.hetckm.base.model.Challenge;
-import nl.hetckm.base.model.Verification;
+import nl.hetckm.base.model.bouncer.Challenge;
+import nl.hetckm.base.model.bouncer.Verification;
 import nl.hetckm.bouncer.challenge.ChallengeRepository;
 import nl.hetckm.bouncer.verification.VerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;

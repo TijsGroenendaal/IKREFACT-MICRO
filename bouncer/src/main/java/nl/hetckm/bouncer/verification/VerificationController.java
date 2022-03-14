@@ -2,9 +2,9 @@ package nl.hetckm.bouncer.verification;
 
 import nl.hetckm.base.enums.VerificationStatus;
 import nl.hetckm.base.exceptions.ForbiddenException;
-import nl.hetckm.base.model.Verification;
-import nl.hetckm.base.model.VerificationResponse;
-import nl.hetckm.base.model.VerificationReviewed;
+import nl.hetckm.base.model.bouncer.Verification;
+import nl.hetckm.base.model.bouncer.VerificationResponse;
+import nl.hetckm.base.model.bouncer.VerificationReviewed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
