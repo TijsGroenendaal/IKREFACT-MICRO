@@ -3,6 +3,7 @@ package nl.hetckm.base.dao;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.preset.Preset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ public class PresetDAO {
 
     public Preset getOne(UUID presetId) {
         final Map<String, Object> authorities = new HashMap<>();
-        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
+        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + RelationHelper.getPlatformId());
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
@@ -62,7 +63,7 @@ public class PresetDAO {
 
     public void deleteAllByPlatform(UUID platformId) {
         final Map<String, Object> authorities = new HashMap<>();
-        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
+        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + RelationHelper.getPlatformId());
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
