@@ -19,6 +19,7 @@
         <module>gateway</module>
         <module>user-service</module>
         <module>preset-service</module>
+        <module>webhook-service</module>
     </modules>
 
 </project>

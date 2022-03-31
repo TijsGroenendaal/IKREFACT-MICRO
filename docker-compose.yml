@@ -13,6 +13,22 @@ services:
     ports:
       - "3306:3306"
 
+  webhook-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=preset
+      - MYSQL_USER=bouncer
+      - MYSQL_PASSWORD=admin
+      - MYSQL_TCP_PORT=3308
+
+  webhook-service:
+    build: webhook-service
+    restart: on-failure
+    env_file: .env
+    ports:
+      - "8084:8084"
+
   user-service:
     build: user-service
     restart: on-failure
