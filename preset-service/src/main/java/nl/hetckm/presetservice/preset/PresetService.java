@@ -36,6 +36,9 @@ public class PresetService {
     }
 
     public void deletePreset(UUID ID) {
+        final Preset preset = presetRepository.findById(ID).orElseThrow(() -> new EntityNotFoundException(Preset.class));
+        RelationHelper.isFromParent(preset.getPlatformId(), RelationHelper.getPlatformId(), Preset.class);
+
         try {
             presetRepository.deleteById(ID);
         } catch (IllegalArgumentException e) {
@@ -45,12 +48,14 @@ public class PresetService {
 
     public Preset patchPreset(UUID ID, Preset preset) {
         final Preset oldPreset = presetRepository.findById(ID).orElseThrow(() -> new EntityNotFoundException(Preset.class));
+        RelationHelper.isFromParent(oldPreset.getPlatformId(), RelationHelper.getPlatformId(), Preset.class);
         oldPreset.setChanges(preset);
 
         return presetRepository.save(oldPreset);
     }
 
     public void deleteByPlatform(UUID platformId) {
+        RelationHelper.isFromParent(platformId, RelationHelper.getPlatformId(), Preset.class);
         presetRepository.deleteAllByPlatformId(platformId);
     }
 }
