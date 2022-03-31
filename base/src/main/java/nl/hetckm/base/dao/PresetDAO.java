@@ -31,10 +31,14 @@ public class PresetDAO {
     private final CookieHelper cookieHelper;
     private final JwtHelper jwtHelper;
 
+    private final RestTemplate restTemplate;
+
     @Autowired
     public PresetDAO(CookieHelper cookieHelper, JwtHelper jwtHelper) {
         this.cookieHelper = cookieHelper;
         this.jwtHelper = jwtHelper;
+        this.restTemplate = new RestTemplate();
+        this.restTemplate.setErrorHandler(new HttpClientErrorHandler());
     }
 
     public Preset getOne(UUID presetId) {
@@ -48,7 +52,7 @@ public class PresetDAO {
         ), 10).toString());
 
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-        return new RestTemplate().exchange(
+        return restTemplate.exchange(
                 "http://preset-service:"+ presetServicePort +"/preset/" + presetId,
                 HttpMethod.GET,
                 entity,
@@ -67,7 +71,7 @@ public class PresetDAO {
         ), 10).toString());
 
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-        new RestTemplate().delete(
+        restTemplate.delete(
                 "http://preset-service:"+ presetServicePort +"/preset/platform/" + platformId,
                 HttpMethod.DELETE,
                 entity
