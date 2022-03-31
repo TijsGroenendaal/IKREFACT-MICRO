@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders:
+              - "X-Requested-With"
+              - "Origin"
+              - "Content-Type"
+              - "Accept"
+              - "Authorization"
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PATCH
+              - DELETE
