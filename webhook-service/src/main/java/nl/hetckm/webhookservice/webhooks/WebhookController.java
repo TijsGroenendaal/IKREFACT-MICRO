@@ -1,7 +1,8 @@
-package nl.hetckm.bouncer.webhooks;
+package nl.hetckm.webhookservice.webhooks;
 
-import nl.hetckm.base.model.bouncer.Webhook;
-import nl.hetckm.base.model.bouncer.WebhookResponse;
+import nl.hetckm.base.model.webhook.WebhookTriggerRequest;
+import nl.hetckm.base.model.webhook.Webhook;
+import nl.hetckm.base.model.webhook.WebhookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -93,5 +94,11 @@ public class WebhookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteWebhook(@PathVariable UUID id) {
         webhookService.delete(id);
+    }
+
+    @PreAuthorize("hasAuthority('SERVICE')")
+    @PostMapping("/trigger/{id}")
+    public void triggerWebhook(@PathVariable UUID id, @RequestBody WebhookTriggerRequest webhookTriggerRequest) {
+        webhookService.trigger(id, webhookTriggerRequest);
     }
 }

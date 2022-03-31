@@ -1,6 +1,7 @@
 package nl.hetckm.bouncer.challenge;
 
 import nl.hetckm.base.dao.PresetDAO;
+import nl.hetckm.base.dao.WebhookDAO;
 import nl.hetckm.base.enums.ChallengeStatus;
 import nl.hetckm.base.enums.VerificationStatus;
 import nl.hetckm.base.enums.WebhookChange;
@@ -17,7 +18,6 @@ import nl.hetckm.base.model.bouncer.Verification;
 import nl.hetckm.base.model.preset.Preset;
 import nl.hetckm.bouncer.platform.PlatformService;
 import nl.hetckm.bouncer.verification.VerificationService;
-import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -37,7 +37,7 @@ public class ChallengeService {
     private final PlatformService platformService;
     private final PresetDAO presetDAO;
 
-    private final WebhookService webhookService;
+    private final WebhookDAO webhookDAO;
 
     @Value("${environment}")
     private String environment;
@@ -45,13 +45,13 @@ public class ChallengeService {
     @Autowired
     public ChallengeService(
             ChallengeRepository challengeRepository,
-            WebhookService webhookService,
+            WebhookDAO webhookDAO,
             PlatformService platformService,
             PresetDAO presetDAO,
             @Lazy VerificationService verificationService
     ) {
         this.challengeRepository = challengeRepository;
-        this.webhookService = webhookService;
+        this.webhookDAO = webhookDAO;
         this.platformService = platformService;
         this.presetDAO = presetDAO;
         this.verificationService = verificationService;
@@ -87,7 +87,7 @@ public class ChallengeService {
         challenge.setExpiryDate(Date.from(LocalDateTime.now().plusDays(maxDaysLifetime).toInstant(ZoneOffset.UTC)));
         challengeRepository.save(challenge);
         ChallengeResponse challengeResponse = new ChallengeResponse(challenge);
-        webhookService.trigger(
+        webhookDAO.trigger(
                 verification.getPlatform().getId(),
                 WebhookType.CHALLENGE,
                 WebhookChange.CREATE,
@@ -109,7 +109,7 @@ public class ChallengeService {
                 .orElseThrow(() -> new EntityNotFoundException(Challenge.class));
         RelationHelper.isFromParent(challenge.getVerification().getId(), verificationId, Challenge.class);
         RelationHelper.isFromParent(challenge.getVerification().getPlatform().getId(), RelationHelper.getPlatformId(), Challenge.class);
-        webhookService.trigger(
+        webhookDAO.trigger(
                 challenge.getVerification().getId(),
                 WebhookType.CHALLENGE,
                 WebhookChange.DELETE,
@@ -130,7 +130,7 @@ public class ChallengeService {
         challenge.setChallengeStatus(status);
         challengeRepository.save(challenge);
 
-        webhookService.trigger(
+        webhookDAO.trigger(
                 challenge.getVerification().getPlatform().getId(),
                 WebhookType.CHALLENGE,
                 WebhookChange.UPDATE,

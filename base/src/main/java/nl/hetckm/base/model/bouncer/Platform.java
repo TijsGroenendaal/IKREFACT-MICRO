@@ -31,9 +31,6 @@ public class Platform {
     private Set<AppUser> users;
 
     @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Webhook> webhooks;
-
-    @OneToMany(mappedBy = "platform", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Predef> predefs;
 
     @OneToOne(mappedBy = "platform", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)

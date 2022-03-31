@@ -1,4 +1,4 @@
-package nl.hetckm.base.model.bouncer;
+package nl.hetckm.base.model.webhook;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,15 +1,13 @@
-package nl.hetckm.bouncer.webhooks;
+package nl.hetckm.webhookservice.webhooks;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.hetckm.base.enums.WebhookChange;
-import nl.hetckm.base.enums.WebhookType;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.helper.RelationHelper;
-import nl.hetckm.base.model.bouncer.Platform;
-import nl.hetckm.base.model.bouncer.Webhook;
-import nl.hetckm.base.model.bouncer.WebhookBody;
-import nl.hetckm.bouncer.platform.PlatformService;
+import nl.hetckm.base.model.webhook.WebhookTriggerRequest;
+import nl.hetckm.base.model.webhook.Webhook;
+import nl.hetckm.base.model.webhook.WebhookBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,36 +32,27 @@ import java.util.UUID;
 public class WebhookService {
 
     private final WebhookRepository webhookRepository;
-    private final PlatformService platformService;
     private final Logger logger = LoggerFactory.getLogger(WebhookService.class);
 
     /**
      * Instantiates a new Webhook service.
      *
      * @param webhookRepository  the webhook repository
-     * @param platformService    the platform service
      */
     @Autowired
-    public WebhookService(WebhookRepository webhookRepository, PlatformService platformService) {
+    public WebhookService(WebhookRepository webhookRepository) {
         this.webhookRepository = webhookRepository;
-        this.platformService = platformService;
     }
 
     /**
      * Trigger a webhook for a platform with a specific type and change.
      *
      * @param platformId the platform id
-     * @param type       the type
-     * @param change     the change
-     * @param entity     the entity
      */
-    public void trigger(UUID platformId, WebhookType type, WebhookChange change, Object entity) {
-        Platform platform = platformService.findOne(platformId);
-        if (platform == null) {
-            logger.error("Sending webhook but platform was undefined.");
-            return;
-        }
-        Iterable<Webhook> webhooks = webhookRepository.findByPlatformAndType(platform, type);
+    public void trigger(UUID platformId, WebhookTriggerRequest request) {
+        RelationHelper.isFromParent(platformId, RelationHelper.getPlatformId(), Webhook.class);
+
+        Iterable<Webhook> webhooks = webhookRepository.findByPlatformIdAndType(platformId, request.getType());
         WebClient client = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.USER_AGENT, "bouncer-api")
@@ -72,7 +61,7 @@ public class WebhookService {
             UriSpec<RequestBodySpec> uriSpec = client.post();
             RequestBodySpec bodySpec = uriSpec.uri(webhook.getUrl());
 
-            WebhookBody webhookBody = new WebhookBody(webhook.getSecret(), type, change, entity);
+            WebhookBody webhookBody = new WebhookBody(webhook.getSecret(), request.getType(), request.getWebhookChange(), request.getEntity());
 
             ObjectMapper mapper = new ObjectMapper();
             String data;
@@ -106,9 +95,11 @@ public class WebhookService {
         Object testObject = webhook.getType().getTestable().getTestObject();
         trigger(
                 RelationHelper.getPlatformId(),
-                webhook.getType(),
-                WebhookChange.CREATE,
-                testObject
+                new WebhookTriggerRequest(
+                        webhook.getType(),
+                        WebhookChange.CREATE,
+                        testObject
+                )
         );
     }
 
@@ -119,9 +110,8 @@ public class WebhookService {
      * @return the webhook response
      */
     public Webhook create(Webhook requestWebhook) {
-        Platform platform = platformService.findOne(RelationHelper.getPlatformId());
         Webhook webhook = new Webhook();
-        webhook.setPlatform(platform);
+        webhook.setPlatformId(RelationHelper.getPlatformId());
         webhook.setType(requestWebhook.getType());
         webhook.setUrl(requestWebhook.getUrl());
         webhook.setSecret(requestWebhook.getSecret());
@@ -137,8 +127,7 @@ public class WebhookService {
      */
     public Page<Webhook> findAll(Pageable pageable) {
         UUID platformId = RelationHelper.getPlatformId();
-        Platform platform = platformService.findOne(platformId);
-        return webhookRepository.findByPlatform(platform, pageable);
+        return webhookRepository.findByPlatformId(RelationHelper.getPlatformId(), pageable);
     }
 
     /**
@@ -150,7 +139,7 @@ public class WebhookService {
     public Webhook findOne(UUID id) {
         Webhook webhook = webhookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Webhook.class));
-        RelationHelper.isFromParent(webhook.getPlatform().getId(), RelationHelper.getPlatformId(), Webhook.class);
+        RelationHelper.isFromParent(RelationHelper.getPlatformId(), RelationHelper.getPlatformId(), Webhook.class);
         return webhook;
     }
 
@@ -163,7 +152,7 @@ public class WebhookService {
         try {
             Webhook webhook = webhookRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(Webhook.class));
-            RelationHelper.isFromParent(webhook.getPlatform().getId(), RelationHelper.getPlatformId(), Webhook.class);
+            RelationHelper.isFromParent(webhook.getPlatformId(), RelationHelper.getPlatformId(), Webhook.class);
             webhookRepository.delete(webhook);
         } catch (IllegalArgumentException e) {
             throw new EntityNotFoundException(Webhook.class);

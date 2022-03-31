@@ -1,8 +1,7 @@
-package nl.hetckm.bouncer.webhooks;
+package nl.hetckm.webhookservice.webhooks;
 
 import nl.hetckm.base.enums.WebhookType;
-import nl.hetckm.base.model.bouncer.Platform;
-import nl.hetckm.base.model.bouncer.Webhook;
+import nl.hetckm.base.model.webhook.Webhook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -18,10 +17,10 @@ public interface WebhookRepository extends PagingAndSortingRepository<Webhook, U
     /**
      * Find by platform iterable.
      *
-     * @param platform the platform
+     * @param platformId the platform
      * @return the iterable
      */
-    Page<Webhook> findByPlatform(Platform platform, Pageable pageable);
+    Page<Webhook> findByPlatformId(UUID platformId, Pageable pageable);
 
     /**
      * Find by platform and type iterable.
@@ -30,5 +29,5 @@ public interface WebhookRepository extends PagingAndSortingRepository<Webhook, U
      * @param type     the type
      * @return the iterable
      */
-    Iterable<Webhook> findByPlatformAndType(Platform platform, WebhookType type);
+    Iterable<Webhook> findByPlatformIdAndType(UUID platform, WebhookType type);
 }

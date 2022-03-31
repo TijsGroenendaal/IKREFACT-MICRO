@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.verification;
 
+import nl.hetckm.base.dao.WebhookDAO;
 import nl.hetckm.base.enums.VerificationStatus;
 import nl.hetckm.base.enums.WebhookChange;
 import nl.hetckm.base.enums.WebhookType;
@@ -9,7 +10,6 @@ import nl.hetckm.base.model.bouncer.*;
 import nl.hetckm.base.model.preset.Preset;
 import nl.hetckm.bouncer.challenge.ChallengeService;
 import nl.hetckm.bouncer.platform.PlatformService;
-import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -27,18 +27,18 @@ public class VerificationService {
     private final VerificationRepository verificationRepository;
     private final PlatformService platformService;
     private final ChallengeService challengeService;
-    private final WebhookService webhookService;
+    private final WebhookDAO webhookDAO;
 
     @Autowired
     public VerificationService(
             VerificationRepository verificationRepository,
             PlatformService platformService,
-            WebhookService webhookService,
+            WebhookDAO webhookDAO,
             @Lazy ChallengeService challengeService
     ) {
         this.verificationRepository = verificationRepository;
         this.platformService = platformService;
-        this.webhookService = webhookService;
+        this.webhookDAO = webhookDAO;
         this.challengeService = challengeService;
     }
 
@@ -59,7 +59,7 @@ public class VerificationService {
         preset.setUseTextDetection(false);
         preset.setChallengeText("Submit the image of your advertisement");
         challengeService.save(preset, verification.getId());
-        webhookService.trigger(platform.getId(), WebhookType.VERIFICATION, WebhookChange.CREATE, new VerificationResponse(verification));
+        webhookDAO.trigger(platform.getId(), WebhookType.VERIFICATION, WebhookChange.CREATE, new VerificationResponse(verification));
         return verification;
     }
 
@@ -86,7 +86,7 @@ public class VerificationService {
 
         verificationRepository.save(existingVerification);
 
-        webhookService.trigger(
+        webhookDAO.trigger(
                 existingVerification.getPlatform().getId(),
                 WebhookType.VERIFICATION,
                 WebhookChange.UPDATE,
@@ -103,7 +103,7 @@ public class VerificationService {
             Verification verification = verificationRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(Verification.class));
             RelationHelper.isFromParent(verification.getPlatform().getId(), RelationHelper.getPlatformId(), Verification.class);
-            webhookService.trigger(
+            webhookDAO.trigger(
                     verification.getPlatform().getId(),
                     WebhookType.VERIFICATION,
                     WebhookChange.DELETE,

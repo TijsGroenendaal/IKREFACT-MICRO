@@ -1,4 +1,4 @@
-package nl.hetckm.base.model.bouncer;
+package nl.hetckm.base.model.webhook;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,6 @@ public class Webhook {
     private int lastStatusCode;
     private boolean lastError;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private Platform platform;
+    private UUID platformId;
 
 }

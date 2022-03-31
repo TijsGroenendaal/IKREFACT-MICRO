@@ -1,4 +1,4 @@
-package nl.hetckm.base.model.bouncer;
+package nl.hetckm.base.model.webhook;
 
 import lombok.Getter;
 import nl.hetckm.base.enums.WebhookType;
@@ -15,7 +15,7 @@ public class WebhookResponse {
     private String url;
     private String secret;
     private WebhookType type;
-    private PlatformResponse platform;
+    private UUID platform;
     private int lastStatusCode;
     private boolean lastError;
 
@@ -29,7 +29,7 @@ public class WebhookResponse {
         this.url = webhook.getUrl();
         this.secret = webhook.getSecret();
         this.type = webhook.getType();
-        this.platform = new PlatformResponse(webhook.getPlatform());
+        this.platform = webhook.getPlatformId();
         this.lastStatusCode = webhook.getLastStatusCode();
         this.lastError = webhook.isLastError();
     }

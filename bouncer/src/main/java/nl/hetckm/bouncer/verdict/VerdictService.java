@@ -1,5 +1,6 @@
 package nl.hetckm.bouncer.verdict;
 
+import nl.hetckm.base.dao.WebhookDAO;
 import nl.hetckm.base.enums.ChallengeStatus;
 import nl.hetckm.base.enums.VerificationStatus;
 import nl.hetckm.base.enums.WebhookChange;
@@ -13,7 +14,6 @@ import nl.hetckm.base.model.bouncer.VerdictAddModel;
 import nl.hetckm.base.model.bouncer.VerdictResponse;
 import nl.hetckm.bouncer.challenge.ChallengeService;
 import nl.hetckm.bouncer.verification.VerificationService;
-import nl.hetckm.bouncer.webhooks.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +24,18 @@ public class VerdictService {
 
     private final VerdictRepository verdictRepository;
     private final ChallengeService challengeService;
-    private final WebhookService webhookService;
+    private final WebhookDAO webhookDAO;
     private final VerificationService verificationService;
 
     @Autowired
     public VerdictService(
             VerdictRepository verdictRepository,
-            WebhookService webhookService,
+            WebhookDAO webhookDAO,
             ChallengeService challengeService,
             VerificationService verificationService
     ) {
         this.verdictRepository = verdictRepository;
-        this.webhookService = webhookService;
+        this.webhookDAO = webhookDAO;
         this.challengeService = challengeService;
         this.verificationService = verificationService;
     }
@@ -61,7 +61,7 @@ public class VerdictService {
 
         updateVerification(verdict);
 
-        webhookService.trigger(platformId, WebhookType.VERDICT, WebhookChange.CREATE, new VerdictResponse(verdict));
+        webhookDAO.trigger(platformId, WebhookType.VERDICT, WebhookChange.CREATE, new VerdictResponse(verdict));
         return verdict;
     }
 
