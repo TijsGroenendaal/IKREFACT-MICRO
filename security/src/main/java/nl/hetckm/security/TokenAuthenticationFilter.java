@@ -1,7 +1,7 @@
 package nl.hetckm.security;
 
 import io.jsonwebtoken.ClaimJwtException;
-import nl.hetckm.base.enums.Role;
+import nl.hetckm.base.dao.UserDetailsDAO;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.base.model.bouncer.AppUser;
@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -29,31 +25,26 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtHelper jwtHelper;
     private final CookieHelper cookieHelper;
+    private final UserDetailsDAO userDetailsDAO;
     private final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
     @Value("${jwt.cookie-name}")
     private String cookieName;
 
-    @Value("${USER_DETAILS_SERVICE_PORT}")
-    private String userDetailsPort;
-
-    @Value("${AUTHORITIES_CLAIM_NAME}")
-    private String AUTHORITIES_CLAIM_NAME;
-
     @Autowired
     public TokenAuthenticationFilter(
             JwtHelper jwtHelper,
-            CookieHelper cookieHelper
+            CookieHelper cookieHelper,
+            UserDetailsDAO userDetailsDAO
     ) {
         this.jwtHelper = jwtHelper;
         this.cookieHelper = cookieHelper;
+        this.userDetailsDAO = userDetailsDAO;
     }
 
     @Override
@@ -74,22 +65,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 }
                 String username = decodedToken.getSubject();
 
-                final Map<String, Object> authorities = new HashMap<>();
-                authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
-
-                final HttpHeaders headers = new HttpHeaders();
-                headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
-                        "service",
-                        authorities
-                ), 10).toString());
-
-                final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-                AppUser appUser = new RestTemplate().exchange(
-                        "http://user-service:"+ userDetailsPort +"/user/username=" + username,
-                        HttpMethod.GET,
-                        entity,
-                        AppUser.class
-                ).getBody();
+                AppUser appUser = userDetailsDAO.getUserDetails(username);
 
                 String[] userAuthorities = { appUser.getRole().toString() };
                 if (appUser.getPlatform() != null) {
