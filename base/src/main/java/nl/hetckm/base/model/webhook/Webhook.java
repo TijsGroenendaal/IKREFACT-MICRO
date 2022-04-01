@@ -31,6 +31,7 @@ public class Webhook {
     private int lastStatusCode;
     private boolean lastError;
 
+    @org.hibernate.annotations.Type(type="uuid-char")
     private UUID platformId;
 
 }
