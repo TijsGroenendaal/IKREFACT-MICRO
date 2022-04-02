@@ -2,8 +2,10 @@ package nl.hetckm.security;
 
 import io.jsonwebtoken.ClaimJwtException;
 import nl.hetckm.base.dao.UserDetailsDAO;
+import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
+import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.bouncer.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.UUID;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -35,6 +38,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Value("${jwt.cookie-name}")
     private String cookieName;
+
+    @Value("${AUTHORITIES_CLAIM_NAME}")
+    private String AUTHORITIES_CLAIM_NAME;
 
     @Autowired
     public TokenAuthenticationFilter(
@@ -63,23 +69,52 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                    filterChain.doFilter(httpServletRequest, httpServletResponse);
                    return;
                 }
-                String username = decodedToken.getSubject();
 
-                AppUser appUser = userDetailsDAO.getUserDetails(username);
 
-                String[] userAuthorities = { appUser.getRole().toString() };
-                if (appUser.getPlatform() != null) {
-                    userAuthorities = new String[]{appUser.getRole().toString(), appUser.getPlatform().getId().toString()};
+                final UsernamePasswordAuthenticationToken authentication;
+                final Role role =  RelationHelper.getRoleFromJWT(decodedToken, AUTHORITIES_CLAIM_NAME);
+                final UUID platformId = RelationHelper.getPlatformIdFromJWT(decodedToken, AUTHORITIES_CLAIM_NAME);
+
+                String[] userAuthorities = { role.toString() };
+                if (platformId != null) {
+                    userAuthorities = new String[]{ role.toString(), platformId.toString() };
                 }
 
-                final UserDetails userDetails = User.builder()
-                                .username(appUser.getUsername())
-                                .password(appUser.getPassword())
-                                .disabled(!appUser.isEnabled())
-                                .authorities(userAuthorities)
-                                .build();
-                
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                if (role.equals(Role.PLATFORM)) {
+
+                    final UserDetails userDetails = User.builder()
+                            .username("PLATFORM")
+                            .password("")
+                            .authorities(userAuthorities)
+                            .build();
+
+                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                } else if (role.equals(Role.SERVICE)) {
+
+                    final UserDetails userDetails = User.builder()
+                            .username("SERVICE")
+                            .password("")
+                            .authorities(userAuthorities)
+                            .build();
+
+                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                } else if (role.equals(Role.SUPERUSER) || role.equals(Role.ADMIN) || role.equals(Role.MODERATOR)) {
+                    AppUser appUser = userDetailsDAO.getUserDetails(decodedToken.getSubject());
+
+                    final UserDetails userDetails = User.builder()
+                            .username(appUser.getUsername())
+                            .password(appUser.getPassword())
+                            .disabled(!appUser.isEnabled())
+                            .authorities(userAuthorities)
+                            .build();
+
+                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                } else {
+                    filterChain.doFilter(httpServletRequest, httpServletResponse);
+                    return;
+                }
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

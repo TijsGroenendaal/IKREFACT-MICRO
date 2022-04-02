@@ -7,9 +7,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JwtHelper {
@@ -19,6 +17,9 @@ public class JwtHelper {
 
     @Value("${jwt.lifetime}")
     private Long lifetime;
+
+    @Value("${AUTHORITIES_CLAIM_NAME}")
+    private String AUTHORITIES_CLAIM_NAME;
 
     public String createJwtForClaims(String subject, Map<String, Object> claims) {
         Calendar calendar = Calendar.getInstance();
@@ -44,8 +45,10 @@ public class JwtHelper {
             Date issuedAt = jwt.getBody().getIssuedAt();
             Date expiration = jwt.getBody().getExpiration();
             JwsHeader<?> headers = jwt.getHeader();
-            Claims claims = jwt.getBody();
-            return new Jwt("bouncer-api", issuedAt.toInstant(), expiration.toInstant(), headers, claims);
+            Map<String, Object> claimsMap = new HashMap<>();
+            claimsMap.put(AUTHORITIES_CLAIM_NAME, jwt.getBody().get(AUTHORITIES_CLAIM_NAME));
+            claimsMap.put("sub", jwt.getBody().getSubject());
+            return new Jwt("bouncer-api", issuedAt.toInstant(), expiration.toInstant(), headers, claimsMap);
         } catch (JwtException e) {
             throw new UnauthorizedException(e.getMessage());
         }
