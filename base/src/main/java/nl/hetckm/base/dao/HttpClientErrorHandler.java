@@ -22,14 +22,16 @@ public class HttpClientErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
+        String body = new BufferedReader(
+                new InputStreamReader(response.getBody()))
+                .lines().collect(Collectors.joining("\n"));
+        System.out.println(body);
         if (response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
             throw new EntityNotFoundException(Object.class);
         } else if (response.getStatusCode().is5xxServerError()) {
-            throw new ServiceUnavailableException("");
+            throw new ServiceUnavailableException(body);
         } else {
-            String body = new BufferedReader(
-                    new InputStreamReader(response.getBody()))
-                    .lines().collect(Collectors.joining("\n"));
+
             throw new RestClientException(body);
         }
     }
