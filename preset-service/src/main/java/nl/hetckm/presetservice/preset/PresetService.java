@@ -55,7 +55,6 @@ public class PresetService {
     }
 
     public void deleteByPlatform(UUID platformId) {
-        RelationHelper.isFromParent(platformId, RelationHelper.getPlatformId(), Preset.class);
         presetRepository.deleteAllByPlatformId(platformId);
     }
 }
