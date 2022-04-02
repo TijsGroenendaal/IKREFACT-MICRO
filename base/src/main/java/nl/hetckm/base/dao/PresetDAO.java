@@ -1,7 +1,6 @@
 package nl.hetckm.base.dao;
 
 import nl.hetckm.base.enums.Role;
-import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.base.helper.RelationHelper;
 import nl.hetckm.base.model.preset.Preset;
@@ -23,20 +22,15 @@ public class PresetDAO {
     @Value("${AUTHORITIES_CLAIM_NAME}")
     private String AUTHORITIES_CLAIM_NAME;
 
-    @Value("${jwt.cookie-name}")
-    private String cookieName;
-
     @Value("${PRESET_SERVICE_PORT}")
     private String presetServicePort;
 
-    private final CookieHelper cookieHelper;
     private final JwtHelper jwtHelper;
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public PresetDAO(CookieHelper cookieHelper, JwtHelper jwtHelper) {
-        this.cookieHelper = cookieHelper;
+    public PresetDAO(JwtHelper jwtHelper) {
         this.jwtHelper = jwtHelper;
         this.restTemplate = new RestTemplate();
         this.restTemplate.setErrorHandler(new HttpClientErrorHandler());
@@ -47,10 +41,10 @@ public class PresetDAO {
         authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + RelationHelper.getPlatformId());
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
+        headers.add("Authorization", "Bearer " + jwtHelper.createJwtForClaims(
                 "service",
-                authorities
-        ), 10).toString());
+                authorities)
+        );
 
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         return restTemplate.exchange(
@@ -66,10 +60,9 @@ public class PresetDAO {
         authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + RelationHelper.getPlatformId());
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.add(cookieName, cookieHelper.createCookie(jwtHelper.createJwtForClaims(
-                "service",
-                authorities
-        ), 10).toString());
+        headers.add("Authorization", "Bearer " + jwtHelper.createJwtForClaims(
+                "service", authorities
+        ));
 
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         restTemplate.delete(
