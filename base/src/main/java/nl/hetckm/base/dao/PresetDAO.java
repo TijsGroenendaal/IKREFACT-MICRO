@@ -57,7 +57,8 @@ public class PresetDAO {
 
     public void deleteAllByPlatform(UUID platformId) {
         final Map<String, Object> authorities = new HashMap<>();
-        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + RelationHelper.getPlatformId());
+        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE + " " + (
+                RelationHelper.getPlatformId() == null ? "" : RelationHelper.getPlatformId()));
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + jwtHelper.createJwtForClaims(
@@ -65,10 +66,11 @@ public class PresetDAO {
         ));
 
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-        restTemplate.delete(
+        restTemplate.exchange(
                 "http://preset-service:"+ presetServicePort +"/preset/platform/" + platformId,
                 HttpMethod.DELETE,
-                entity
+                entity,
+                Void.class
         );
     }
 
