@@ -1,6 +1,7 @@
 package nl.hetckm.bouncer.platform;
 
 import nl.hetckm.base.dao.PresetDAO;
+import nl.hetckm.base.dao.WebhookDAO;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
 import nl.hetckm.base.exceptions.InvalidJwtException;
@@ -33,6 +34,7 @@ public class PlatformService {
     private final UserService userService;
     private final EncryptionService encryptionService;
     private final PresetDAO presetDAO;
+    private final WebhookDAO webhookDAO;
 
     @Value("${lifetime.challenge}")
     private int MAX_CHALLENGE_LIFETIME;
@@ -45,12 +47,14 @@ public class PlatformService {
             PlatformRepository platformRepository,
             EncryptionService encryptionService,
             @Lazy UserService userService,
-            PresetDAO presetDAO
+            PresetDAO presetDAO,
+            WebhookDAO webhookDAO
     ) {
         this.platformRepository = platformRepository;
         this.encryptionService = encryptionService;
         this.userService = userService;
         this.presetDAO = presetDAO;
+        this.webhookDAO = webhookDAO;
     }
 
     public NewPlatformResponse create(String username, String userPassword, Platform platform) {
@@ -115,6 +119,7 @@ public class PlatformService {
         try {
             platformRepository.deleteById(id);
             presetDAO.deleteAllByPlatform(id);
+            webhookDAO.deleteAllByPlatform(id);
         } catch (IllegalArgumentException e) {
             throw new EntityNotFoundException(Platform.class);
         }

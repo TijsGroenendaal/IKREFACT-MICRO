@@ -56,4 +56,22 @@ public class WebhookDAO {
                 Void.class
         ).getBody();
     }
+
+    public void deleteAllByPlatform(UUID platformId) {
+        final Map<String, Object> authorities = new HashMap<>();
+        authorities.put(AUTHORITIES_CLAIM_NAME, Role.SERVICE);
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + jwtHelper.createJwtForClaims(
+                "service", authorities
+        ));
+
+        final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        restTemplate.exchange(
+                "http://webhook-service:" + webhookServicePort + "/webhook/platform=" + platformId,
+                HttpMethod.DELETE,
+                entity,
+                Void.class
+        );
+    }
 }

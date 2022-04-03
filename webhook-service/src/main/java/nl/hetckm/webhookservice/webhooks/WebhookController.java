@@ -101,4 +101,10 @@ public class WebhookController {
     public void triggerWebhook(@PathVariable UUID id, @RequestBody WebhookTriggerRequest webhookTriggerRequest) {
         webhookService.trigger(id, webhookTriggerRequest);
     }
+
+    @PreAuthorize("hasAuthority('SERVICE')")
+    @DeleteMapping("/platform={platformId}")
+    public void deleteAllByPlatformId(@PathVariable UUID platformId) {
+        webhookService.deleteAllByPlatformId(platformId);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -30,4 +31,6 @@ public interface WebhookRepository extends PagingAndSortingRepository<Webhook, U
      * @return the iterable
      */
     Iterable<Webhook> findByPlatformIdAndType(UUID platform, WebhookType type);
+    @Transactional
+    void deleteAllByPlatformId(UUID platformId);
 }

@@ -126,7 +126,6 @@ public class WebhookService {
      * @return Iterable with WebhookResponses
      */
     public Page<Webhook> findAll(Pageable pageable) {
-        UUID platformId = RelationHelper.getPlatformId();
         return webhookRepository.findByPlatformId(RelationHelper.getPlatformId(), pageable);
     }
 
@@ -159,5 +158,7 @@ public class WebhookService {
         }
     }
 
-
+    public void deleteAllByPlatformId(UUID platformId) {
+        webhookRepository.deleteAllByPlatformId(platformId);
+    }
 }
