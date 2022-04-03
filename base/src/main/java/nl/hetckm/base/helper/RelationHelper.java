@@ -2,7 +2,6 @@ package nl.hetckm.base.helper;
 
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.exceptions.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;

@@ -2,8 +2,8 @@ package nl.hetckm.bouncer.media.vision;
 
 import com.google.cloud.vision.v1.*;
 import nl.hetckm.base.interfaces.VertexContainer;
-import nl.hetckm.base.model.bouncer.*;
 import nl.hetckm.base.model.bouncer.Vertex;
+import nl.hetckm.base.model.bouncer.*;
 import nl.hetckm.bouncer.media.MediaRepository;
 import nl.hetckm.bouncer.media.gps.GpsService;
 import org.slf4j.Logger;
