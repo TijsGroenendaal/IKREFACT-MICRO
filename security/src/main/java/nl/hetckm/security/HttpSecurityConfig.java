@@ -1,7 +1,6 @@
 package nl.hetckm.security;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
-import nl.hetckm.base.dao.UserDetailsDAO;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +34,14 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtHelper jwtHelper;
     private final CookieHelper cookieHelper;
-    private final UserDetailsDAO userDetailsDAO;
 
     @Autowired
     public HttpSecurityConfig(
             JwtHelper jwtHelper,
-            CookieHelper cookieHelper,
-            UserDetailsDAO userDetailsDAO
+            CookieHelper cookieHelper
     ) {
         this.jwtHelper = jwtHelper;
         this.cookieHelper = cookieHelper;
-        this.userDetailsDAO = userDetailsDAO;
     }
 
     @Override
@@ -96,7 +92,7 @@ public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(jwtHelper, cookieHelper, userDetailsDAO);
+        return new TokenAuthenticationFilter(jwtHelper, cookieHelper);
     }
 
     @Bean

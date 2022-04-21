@@ -1,12 +1,10 @@
 package nl.hetckm.security;
 
 import io.jsonwebtoken.ClaimJwtException;
-import nl.hetckm.base.dao.UserDetailsDAO;
 import nl.hetckm.base.enums.Role;
 import nl.hetckm.base.helper.CookieHelper;
 import nl.hetckm.base.helper.JwtHelper;
 import nl.hetckm.base.helper.RelationHelper;
-import nl.hetckm.base.model.bouncer.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtHelper jwtHelper;
     private final CookieHelper cookieHelper;
-    private final UserDetailsDAO userDetailsDAO;
     private final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
     @Value("${jwt.cookie-name}")
@@ -45,12 +42,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     public TokenAuthenticationFilter(
             JwtHelper jwtHelper,
-            CookieHelper cookieHelper,
-            UserDetailsDAO userDetailsDAO
+            CookieHelper cookieHelper
     ) {
         this.jwtHelper = jwtHelper;
         this.cookieHelper = cookieHelper;
-        this.userDetailsDAO = userDetailsDAO;
     }
 
     @Override
@@ -101,12 +96,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 } else if (role.equals(Role.SUPERUSER) || role.equals(Role.ADMIN) || role.equals(Role.MODERATOR)) {
-                    AppUser appUser = userDetailsDAO.getUserDetails(decodedToken.getSubject());
 
                     final UserDetails userDetails = User.builder()
-                            .username(appUser.getUsername())
-                            .password(appUser.getPassword())
-                            .disabled(!appUser.isEnabled())
+                            .username(decodedToken.getSubject())
+                            .password("")
                             .authorities(userAuthorities)
                             .build();
 
