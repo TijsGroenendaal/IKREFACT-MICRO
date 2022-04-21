@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ServiceUnavailableException extends RuntimeException {
 
     public ServiceUnavailableException(String msg) {
-        super(msg);
+        super(msg + " Is Unavailable");
     }
 
 }

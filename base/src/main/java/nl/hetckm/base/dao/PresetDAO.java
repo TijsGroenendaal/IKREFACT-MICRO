@@ -1,12 +1,12 @@
 package nl.hetckm.base.dao;
 
+import nl.hetckm.base.exceptions.ServiceUnavailableException;
 import nl.hetckm.base.helper.HttpHelper;
 import nl.hetckm.base.model.preset.Preset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
@@ -16,33 +16,33 @@ public class PresetDAO {
     @Value("${PRESET_SERVICE_PORT}")
     private String presetServicePort;
 
-    private final RestTemplate restTemplate;
-
     private final HttpHelper httpHelper;
+
+    private final WebClient webClient;
 
     @Autowired
     public PresetDAO(HttpHelper httpHelper) {
+        this.webClient = WebClient.create();
         this.httpHelper = httpHelper;
-        this.restTemplate = new RestTemplate();
-        this.restTemplate.setErrorHandler(new HttpClientErrorHandler());
     }
 
     public Preset getOne(UUID presetId) {
-        return restTemplate.exchange(
-                "http://preset-service:"+ presetServicePort +"/preset/" + presetId,
-                HttpMethod.GET,
-                httpHelper.createHttpAuthorizationHeader(""),
-                Preset.class
-        ).getBody();
+        return webClient
+                .get()
+                .uri("http://preset-service:" + presetServicePort + "/preset/" + presetId)
+                .header("Authorization", httpHelper.createHttpAuthorizationHeaderValues())
+                .retrieve().bodyToMono(Preset.class).doOnError(mono -> {
+                    throw new ServiceUnavailableException("Preset Service");
+                }).block();
     }
 
     public void deleteAllByPlatform(UUID platformId) {
-        restTemplate.exchange(
-                "http://preset-service:"+ presetServicePort +"/preset/platform/" + platformId,
-                HttpMethod.DELETE,
-                httpHelper.createHttpAuthorizationHeader(""),
-                Void.class
-        );
+        webClient
+                .delete()
+                .uri("http://preset-service:"+ presetServicePort +"/preset/platform/" + platformId)
+                .header("Authorization", httpHelper.createHttpAuthorizationHeaderValues())
+                .retrieve().toBodilessEntity().doOnError(mono -> {
+                    // TODO save failed transaction
+                }).subscribe();
     }
-
 }
