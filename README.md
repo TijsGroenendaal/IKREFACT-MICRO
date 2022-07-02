@@ -15,14 +15,14 @@ The project source is divided into several modules.
 | Name           | Description                                                                             |
 |:---------------|:----------------------------------------------------------------------------------------|
 | Base           | Contains Entity and utility classes that can be used in other Modules                   |
-| Bouncer        | The monolith where some features have been pulled out and places into new microservice. |
+| Bouncer        | The remaining monolith 								   |
 | Gateway        | The reversed proxy used by the Front-end to easily communicate with the microservices   |
 | PresetService  | The Service that contains all features of the Preset domain                             |
 | Security       | Contains the implementation for handling JWT security                                   |
 | WebhookService | The Service that contains all features of the Webhook domain                            |
 
 ## Gateway
-To configure the routing to downstream services open [application.properties](https://github.com/TijsGroenendaal/IKREFACT-MICRO/blob/7c3ebeddfd5c4012972a83af9903268ba13ba249/gateway/src/main/resources/application.properties)
+To configure the routing to downstream services open [application.properties](https://github.com/TijsGroenendaal/IKREFACT-MICRO/blob/main/gateway/src/main/resources/application.properties)
 
 Because the stripped monolith Bouncer contains multiple domains it is important that the routing configurations has the highest index. That way it will not be overwritten.
 
@@ -49,7 +49,7 @@ All of the above events can be captured by webhooks and forwarded to the user, u
 ## Managing predefs & presets
 ### Presets
 Presets are used to create new challenges. Presets contain the challenge text, which usually contains the question or task that must be completed.
-They also contain settings for automatic checks, more info about these can be found at the [image data processing](https://github.com/jely2002/IPSEN3-CKM-FRONT/wiki/Image-data-processing) page.
+They also contain settings for automatic checks, more info about these can be found at the [image data processing](https://github.com/TijsGroenendaal/IKREFACT-MICRO#image-data-processing) page.
 Only admins can manage presets, moderators can only view a list of their names to create a new challenge with.
 
 ### Predefs
@@ -493,7 +493,7 @@ The API requires a MySQL 8 database in order to store its data.
 A DB can be hosted by a cloud provider such as Digital Ocean, or it can be set up yourself.
 ### Google Cloud API
 #### Vision AI API
-The backend needs [Vision AI](https://github.com/jely2002/IPSEN3-CKM-FRONT/wiki/Image-data-processing#google-cloud-vision-ai) to extract additional data from images.
+The backend needs [Vision AI](https://github.com/TijsGroenendaal/IKREFACT-MICRO#image-data-processing) to extract additional data from images.
 Vision AI is part of the Google Cloud platform.
 
 [Select get started on this page to generate keys and set up a service account.](https://cloud.google.com/vision)
